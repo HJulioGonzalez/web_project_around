@@ -1,0 +1,32 @@
+.footer {
+  /* padding: 0 200px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footer__icons {
+  display: flex;
+  column-gap: 15px;
+  margin: 25px 0;
+}
+
+.footer__icon {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer__links {
+  display: flex;
+  column-gap: 15px;
+}
+
+.footer__link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer__copyright {
+  color: gray;
+}

@@ -1,0 +1,19 @@
+.page {
+  max-width: 880px;
+  max-height: 720px;
+  font-family: "Inter", sans-serif;
+  font-weight: normal;
+  line-height: normal;
+  margin: auto;
+  background-color: #000000;
+  color: #fff;
+  padding: 0 15.62%;
+  overflow-y: scroll;
+  position: relative;
+}
+
+@media screen and (min-width: 1281px) {
+  .page {
+    padding: 0 200px;
+  }
+}

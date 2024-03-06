@@ -1,0 +1,100 @@
+.venue {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 282px;
+}
+
+.venue__del-button {
+  position: absolute;
+  right: 15px;
+  top: 18px;
+}
+
+.venue__del-button:hover .venue__del-button-icon {
+  fill: gray;
+}
+
+.venue__picture {
+  border-radius: 10px 10px 0 0;
+}
+
+.venue__info {
+  padding: 25px 15px 31px 21px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0 0 10px 10px;
+  width: 200;
+}
+
+.venue__info-name {
+  color: #000;
+  margin: 0;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.21;
+  width: 180px;
+  height: 23px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.venue__info-likebutton {
+  align-self: center;
+}
+
+.venue__info-likebutton:active {
+  display: none;
+}
+
+.venue__info-likebutton:active + .venue__info-likebutton_active {
+  display: inline;
+}
+
+.venue__info-likebutton:hover .venue__info-likesymbol {
+  fill: gray;
+}
+
+@media screen and (min-width: 846px) and (max-width: 1280px) {
+  .venue {
+    width: 32%;
+  }
+
+  .venue__info-name {
+    font-size: 1.9vw;
+  }
+}
+
+@media screen and (min-width: 1281px) {
+  .venue {
+    width: 282px;
+  }
+}
+
+@media screen and (min-width: 494px) and (max-width: 845px) {
+  .venue {
+    width: 48.53%;
+  }
+
+  .venue__info-name {
+    font-size: 2.8vw;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 409px) {
+  .venue {
+    width: 100%;
+  }
+
+  .venue__info-name {
+    font-size: 5vw;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 493px) {
+  .venue {
+    margin: auto;
+  }
+}

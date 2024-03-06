@@ -1,0 +1,21 @@
+.header {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: row;
+  padding: 45px 0 40px;
+  /* margin: 0 200px; */
+  max-height: 74px;
+  border-bottom: 1px #545454 solid;
+}
+
+.header__text {
+  font-size: 38px;
+  margin: 0;
+}
+
+.header__text-country {
+  font-size: 12px;
+  align-self: self-start;
+  margin: 0;
+}

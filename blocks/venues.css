@@ -1,0 +1,25 @@
+.venues {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 18px;
+}
+
+@media screen and (min-width: 845px) and (max-width: 1280px) {
+  .venues {
+    gap: 20px 1.93%;
+  }
+}
+
+@media screen and (min-width: 1281px) {
+  .venues {
+    gap: 20px 17px;
+    width: 880px;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 845px) {
+  .venues {
+    justify-content: space-between;
+    gap: 20px 2.93%;
+  }
+}
