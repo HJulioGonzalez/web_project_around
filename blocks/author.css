@@ -32,33 +32,45 @@
   line-height: 1.21;
 }
 
-.author__info-button {
+.author__editbutton {
+  width: 24px;
+  height: 24px;
   align-self: center;
 }
 
-.author__info-button:hover .author__info-rectangle {
-  stroke: rgba(255, 255, 255, 0.6);
+.author__editbutton_unhovered:hover {
+  display: none;
 }
 
-.author__info-button:hover .author__info-pen {
-  fill: rgba(255, 255, 255, 0.6);
+.author__editbutton_unhovered:hover + .author__editbutton_hovered {
+  display: inline;
+}
+
+.author__editbutton_hovered {
+  display: none;
 }
 
 .author__add-button {
   margin-left: auto;
   margin-top: 38.75px;
+  width: 150px;
+  height: 50px;
 }
 
-.author__add-button_resolution_845 {
+.author__add-button_unhovered:hover {
   display: none;
 }
 
-.author__add-button:hover .author__add-button-rectangle {
-  stroke: rgba(255, 255, 255, 0.6);
+.author__add-button_unhovered:hover + .author__add-button_hovered {
+  display: inline;
 }
 
-.author__add-button:hover .author__add-button-symbol {
-  fill: rgba(255, 255, 255, 0.6);
+.author__add-button_hovered {
+  display: none;
+}
+
+.author__add-button_resolution_725 {
+  display: none;
 }
 
 @media screen and (min-width: 494px) and (max-width: 845px) {
@@ -79,7 +91,7 @@
   .author__add-button {
     display: none;
   }
-  .author__add-button_resolution_845 {
+  .author__add-button_resolution_725 {
     display: inline;
   }
 

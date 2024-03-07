@@ -1,4 +1,4 @@
-let editButton = document.querySelector(".author__info-button");
+let editButton = document.querySelector(".author__editbutton_hovered");
 
 function showEditInfo() {
   let editButton = document.querySelector(".popup");
