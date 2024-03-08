@@ -9,20 +9,10 @@
   position: absolute;
   right: 15px;
   top: 18px;
-  width: 18px;
-  height: 19.3px;
 }
 
-.venue__del-button_hovered {
-  display: none;
-}
-
-.venue__del-button_unhovered:hover {
-  display: none;
-}
-
-.venue__del-button_unhovered:hover + .venue__del-button_hovered {
-  display: inline;
+.venue__del-button:hover .venue__del-button-icon {
+  fill: gray;
 }
 
 .venue__picture {
