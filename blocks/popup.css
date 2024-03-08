@@ -87,6 +87,19 @@
   margin: auto;
 }
 
+.pop__container-closesymbol_hovered {
+  display: none;
+}
+
+.pop__container-closesymbol_unhovered:hover {
+  display: none;
+}
+
+.pop__container-closesymbol_unhovered:hover
+  ~ .pop__container-closesymbol_hovered {
+  display: inline;
+}
+
 .pop__container-closepath:hover {
   fill: rgba(255, 255, 255, 0.6);
 }
