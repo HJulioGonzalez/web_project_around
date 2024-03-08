@@ -1,7 +1,7 @@
 let editButton = document.querySelector(".author__editbutton_hovered");
 
 function showEditInfo() {
-  let editButton = document.querySelector(".popup");
+  let editButton = document.querySelector(".popup_opened");
   editButton.setAttribute("style", "display: flex");
 }
 
@@ -10,7 +10,7 @@ editButton.addEventListener("click", showEditInfo);
 let closeButton = document.querySelector(".pop__container-closebuttton");
 
 function closeEditForm() {
-  let formWindow = document.querySelector(".popup");
+  let formWindow = document.querySelector(".popup_opened");
   formWindow.setAttribute("style", "display: none");
 }
 

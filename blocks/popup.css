@@ -5,8 +5,11 @@
   left: 0;
   width: 100%;
   height: 720px;
-  display: none;
   overflow-y: scroll;
+}
+
+.popup_opened {
+  display: none;
 }
 .popup__container {
   background: #fff;
