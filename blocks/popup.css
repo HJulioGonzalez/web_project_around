@@ -25,13 +25,13 @@
   position: relative;
 }
 
-.pop__container-title {
+.popup__container-title {
   font-weight: 900;
   font-size: 24px;
   line-height: 1.21;
 }
 
-.pop__container-name {
+.popup__container-name {
   margin: 54px 0 0;
   outline: 0;
   border-width: 0 0 1px;
@@ -39,14 +39,14 @@
   height: 27.26px;
 }
 
-.pop__container-name::placeholder {
+.popup__container-name::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
   color: #c4c4c4;
 }
 
-.pop__container-job {
+.popup__container-job {
   margin: 29.74px 0 48px;
   outline: 0;
   border-width: 0 0 1px;
@@ -54,14 +54,14 @@
   height: 27.34px;
 }
 
-.pop__container-job::placeholder {
+.popup__container-job::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
   color: #c4c4c4;
 }
 
-.pop__container-button {
+.popup__container-button {
   margin-top: auto;
   height: 50.15px;
   border: none;
@@ -73,11 +73,11 @@
   border-radius: 2px;
 }
 
-.pop__container-button:hover {
+.popup__container-button:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.pop__container-closebuttton {
+.popup__container-closebuttton {
   position: absolute;
   top: -47px;
   right: -45.56px;
@@ -86,20 +86,20 @@
   display: flex;
 }
 
-.pop__container-closesymbol {
+.popup__container-closesymbol {
   margin: auto;
 }
 
-.pop__container-closesymbol_hovered {
+.popup__container-closesymbol_hovered {
   display: none;
 }
 
-.pop__container-closesymbol_unhovered:hover {
+.popup__container-closesymbol_unhovered:hover {
   display: none;
 }
 
-.pop__container-closesymbol_unhovered:hover
-  ~ .pop__container-closesymbol_hovered {
+.popup__container-closesymbol_unhovered:hover
+  ~ .popup__container-closesymbol_hovered {
   display: inline;
 }
 
@@ -123,17 +123,17 @@
     height: 322px;
   }
 
-  .pop__container-title {
+  .popup__container-title {
     font-size: 18px;
     line-height: 1.21;
   }
 
-  .pop__container-name {
+  .popup__container-name {
     margin: 76px 0 0;
     height: 26px;
   }
 
-  .pop__container-button {
+  .popup__container-button {
     font-size: 14px;
     line-height: 1.21;
   }

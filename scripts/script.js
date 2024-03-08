@@ -7,7 +7,7 @@ function showEditInfo() {
 
 editButton.addEventListener("click", showEditInfo);
 
-let closeButton = document.querySelector(".pop__container-closebuttton");
+let closeButton = document.querySelector(".popup__container-closebuttton");
 
 function closeEditForm() {
   let formWindow = document.querySelector(".popup_opened");
@@ -20,8 +20,8 @@ let formElement = document.querySelector(".popup__container");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  let nameInput = document.querySelector(".pop__container-name");
-  let jobInput = document.querySelector(".pop__container-job");
+  let nameInput = document.querySelector(".popup__container-name");
+  let jobInput = document.querySelector(".popup__container-job");
 
   let newName = nameInput.value;
   let newJob = jobInput.value;
