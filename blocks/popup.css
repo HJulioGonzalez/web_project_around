@@ -84,23 +84,13 @@
   width: 57.56px;
   height: 57.56px;
   display: flex;
+  background: url(../images/close_button_WHITE.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.popup__container-closesymbol {
-  margin: auto;
-}
-
-.popup__container-closesymbol_hovered {
-  display: none;
-}
-
-.popup__container-closesymbol_unhovered:hover {
-  display: none;
-}
-
-.popup__container-closesymbol_unhovered:hover
-  ~ .popup__container-closesymbol_hovered {
-  display: inline;
+.popup__container-closebuttton:hover {
+  opacity: 60%;
 }
 
 @media screen and (min-width: 1281px) {
