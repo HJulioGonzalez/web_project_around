@@ -9,20 +9,11 @@
   position: absolute;
   right: 15px;
   top: 18px;
-  width: 18px;
-  height: 19.3px;
 }
 
-.venue__del-button_hovered {
-  display: none;
-}
-
-.venue__del-button_unhovered:hover {
-  display: none;
-}
-
-.venue__del-button_unhovered:hover + .venue__del-button_hovered {
-  display: inline;
+.venue__del-button:hover > .venue__del-button-bottompath,
+.venue__del-button:hover > .venue__del-button-toppath {
+  fill: rgba(255, 255, 255, 0.6);
 }
 
 .venue__picture {
@@ -30,7 +21,7 @@
 }
 
 .venue__info {
-  padding: 25px 15px 31px 21px;
+  padding: 25px 15px 24px 21px;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
@@ -44,7 +35,7 @@
   font-size: 24px;
   line-height: 1.21;
   width: 180px;
-  height: 23px;
+  height: 30px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -52,36 +43,20 @@
 
 .venue__info-likebutton {
   align-self: center;
-  width: 21px;
-  height: 19px;
 }
 
-.venue__info-likebutton_status_unhovered:hover
-  ~ .venue__info-likebutton_status_hovered {
-  display: inline;
+.venue__info-likebutton:active path {
+  d: path(
+    "M19.3764 1.68186C21.5412 3.90213 21.5412 7.54338 19.3764 9.78586L10.4812 19L1.60755 9.80806C0.578719 8.72013 0 7.27695 0 5.74496C0 4.21297 0.557285 2.76979 1.60755 1.68186C3.75096 -0.560619 7.26614 -0.560619 9.43098 1.70406L10.4812 2.792L11.5315 1.68186C13.6964 -0.560619 17.2115 -0.560619 19.3764 1.68186Z"
+  );
 }
 
-.venue__info-likebutton_status_unhovered:hover {
-  display: none;
+.venue__info-likebutton:hover > .venue__info-likebutton-path {
+  fill: rgba(0, 0, 0, 0.5);
 }
 
-.venue__info-likebutton_status_hovered:active
-  ~ .venue__info-likebutton_status_active {
-  display: inline;
-}
-
-.venue__info-likebutton_status_unhovered:has(
-    ~ .venue__info-likebutton_status_hovered:active
-  ) {
-  display: none;
-}
-
-.venue__info-likebutton_status_hovered {
-  display: none;
-}
-
-.venue__info-likebutton_status_active {
-  display: none;
+.venue__info-likebutton:active > .venue__info-likebutton-path {
+  fill: rgba(0, 0, 0, 1);
 }
 
 @media screen and (min-width: 846px) and (max-width: 1280px) {

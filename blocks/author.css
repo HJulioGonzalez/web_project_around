@@ -33,40 +33,28 @@
 }
 
 .author__editbutton {
-  width: 24px;
-  height: 24px;
   align-self: center;
 }
 
-.author__editbutton_unhovered:hover {
-  display: none;
+.author__editbutton:hover > .author__editbutton-rectangle {
+  stroke: rgba(255, 255, 255, 0.6);
 }
 
-.author__editbutton_unhovered:hover + .author__editbutton_hovered {
-  display: inline;
-}
-
-.author__editbutton_hovered {
-  display: none;
+.author__editbutton:hover > .author__editbutton-path {
+  fill: rgba(255, 255, 255, 0.6);
 }
 
 .author__add-button {
   margin-left: auto;
   margin-top: 38.75px;
-  width: 150px;
-  height: 50px;
 }
 
-.author__add-button_unhovered:hover {
-  display: none;
+.author__add-button:hover > .author__add-button-rectangle {
+  stroke: rgba(255, 255, 255, 0.6);
 }
 
-.author__add-button_unhovered:hover + .author__add-button_hovered {
-  display: inline;
-}
-
-.author__add-button_hovered {
-  display: none;
+.author__add-button:hover > .author__add-button-path {
+  fill: rgba(255, 255, 255, 0.6);
 }
 
 .author__add-button_resolution_725 {
