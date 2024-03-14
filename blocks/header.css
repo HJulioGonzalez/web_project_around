@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: row;
   padding: 45px 0 40px;
-  /* margin: 0 200px; */
   max-height: 74px;
   border-bottom: 1px #545454 solid;
 }
@@ -18,4 +17,18 @@
   font-size: 12px;
   align-self: self-start;
   margin: 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 725px) {
+  .header {
+    padding: 35px 0 34px;
+  }
+
+  .header__text {
+    font-size: 20px;
+  }
+
+  .header__text-country {
+    font-size: 8px;
+  }
 }

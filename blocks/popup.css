@@ -103,7 +103,17 @@
 
 @media screen and (min-width: 321px) and (max-width: 540px) {
   .popup__container {
-    width: 79.63%;
+    width: 88.125%;
+  }
+
+  .popup__container-closebuttton {
+    top: -50px;
+    right: 2.23px;
+    width: 36.77px;
+    height: 36.77px;
+    background: url(../images/close_button_WHITE320.svg);
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }
 
@@ -126,5 +136,15 @@
   .popup__container-button {
     font-size: 14px;
     line-height: 1.21;
+  }
+
+  .popup__container-closebuttton {
+    top: -50px;
+    right: 2.23px;
+    width: 36.77px;
+    height: 36.77px;
+    background: url(../images/close_button_WHITE320.svg);
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }
