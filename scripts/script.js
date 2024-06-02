@@ -76,8 +76,8 @@ function saveNewImg(event) {
   let imgCopy = newImgContainer.cloneNode(true);
   allImgContanier.prepend(imgCopy);
 
-  let imgName = document.querySelector(".new-image__container-town_name");
-  let imgURL = document.querySelector(".new-image__container-img_URL");
+  let imgName = document.querySelector(".new-image__container-town-name");
+  let imgURL = document.querySelector(".new-image__container-img-URL");
   let currentImg = document.querySelector(".venue__picture");
 
   let newImgName = imgName.value;
@@ -97,7 +97,6 @@ function saveNewImg(event) {
       "style",
       "background: url(../images/like_ACTIVE.svg)"
     );
-    console.log(objClicked);
   }
 
   for (i = 0; i < newLikeButtons.length; i++) {
@@ -128,6 +127,13 @@ function saveNewImg(event) {
     let imgObjClicked = event.target;
     let clickImgURL = imgObjClicked.getAttribute("src");
     let clickImgAltTxt = imgObjClicked.getAttribute("alt");
+    let clickImgName =
+      imgObjClicked.nextElementSibling.firstElementChild.textContent;
+
+    let clickImgLabel = document.querySelector(
+      ".prompted-image__container-label"
+    );
+    clickImgLabel.textContent = clickImgName;
 
     let promptedImgURL = document.querySelector(
       ".prompted-image__container-picture"
