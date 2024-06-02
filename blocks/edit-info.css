@@ -1,4 +1,4 @@
-.popup {
+.edit-info {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
@@ -8,10 +8,17 @@
   overflow-y: scroll;
 }
 
-.popup_opened {
+.edit-info__title {
+  font-weight: 900;
+  size: 24px;
+  line-height: 29.05px;
+}
+
+
+.edit-info_opened {
   display: none;
 }
-.popup__container {
+.edit-info__container {
   background: #fff;
   width: 430px;
   height: 330px;
@@ -25,13 +32,13 @@
   position: relative;
 }
 
-.popup__container-title {
+.edit-info__container-title {
   font-weight: 900;
   font-size: 24px;
   line-height: 1.21;
 }
 
-.popup__container-name {
+.edit-info__container-name {
   margin: 54px 0 0;
   outline: 0;
   border-width: 0 0 1px;
@@ -39,14 +46,14 @@
   height: 27.26px;
 }
 
-.popup__container-name::placeholder {
+.edit-info__container-name::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
   color: #c4c4c4;
 }
 
-.popup__container-job {
+.edit-info__container-job {
   margin: 29.74px 0 48px;
   outline: 0;
   border-width: 0 0 1px;
@@ -54,14 +61,14 @@
   height: 27.34px;
 }
 
-.popup__container-job::placeholder {
+.edit-info__container-job::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
   color: #c4c4c4;
 }
 
-.popup__container-button {
+.edit-info__container-button {
   margin-top: auto;
   height: 50.15px;
   border: none;
@@ -73,11 +80,11 @@
   border-radius: 2px;
 }
 
-.popup__container-button:hover {
+.edit-info__container-button:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.popup__container-closebuttton {
+.edit-info__container-closebuttton {
   position: absolute;
   top: -47px;
   right: -45.56px;
@@ -89,12 +96,12 @@
   background-position: center;
 }
 
-.popup__container-closebuttton:hover {
+.edit-info__container-closebuttton:hover {
   opacity: 60%;
 }
 
 @media screen and (min-width: 1281px) {
-  .popup {
+  .edit-info {
     width: 1280px;
     left: 50%;
     transform: translateX(-50%);
@@ -102,11 +109,11 @@
 }
 
 @media screen and (min-width: 321px) and (max-width: 540px) {
-  .popup__container {
+  .edit-info__container {
     width: 88.125%;
   }
 
-  .popup__container-closebuttton {
+  .edit-info__container-closebuttton {
     top: -50px;
     right: 2.23px;
     width: 36.77px;
@@ -118,27 +125,27 @@
 }
 
 @media screen and (width: 320px) {
-  .popup__container {
+  .edit-info__container {
     width: 282px;
     height: 322px;
   }
 
-  .popup__container-title {
+  .edit-info__container-title {
     font-size: 18px;
     line-height: 1.21;
   }
 
-  .popup__container-name {
+  .edit-info__container-name {
     margin: 76px 0 0;
     height: 26px;
   }
 
-  .popup__container-button {
+  .edit-info__container-button {
     font-size: 14px;
     line-height: 1.21;
   }
 
-  .popup__container-closebuttton {
+  .edit-info__container-closebuttton {
     top: -50px;
     right: 2.23px;
     width: 36.77px;

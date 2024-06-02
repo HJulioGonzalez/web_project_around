@@ -5,5 +5,7 @@
 @import url(../blocks/author.css);
 @import url(../blocks/venues.css);
 @import url(../blocks/venue.css);
-@import url(../blocks/popup.css);
+@import url(../blocks/edit-info.css);
+@import url(../blocks/new-image.css);
+@import url(../blocks/prompted-image.css);
 @import url(../blocks/footer.css);

@@ -34,15 +34,19 @@
             <p class="author__info-job">Explorador</p>
             <div
               class="author__add-button author__add-button_resolution_725"
+              onclick="clearFields()"
             ></div>
           </div>
-          <div class="author__add-button"></div>
+          <div
+            class="author__add-button author__add-button_resolution_1180"
+            onclick="clearFields()"
+          ></div>
         </div>
         <div class="venues">
           <div class="venue">
             <div class="venue__del-button"></div>
             <img
-              src="./images/handdorf_place.jpg"
+              src="./images/hahndorf_place.jpg"
               alt="Town of Hahndorf"
               class="venue__picture"
             />
@@ -54,7 +58,7 @@
           <div class="venue">
             <div class="venue__del-button"></div>
             <img
-              src="./images/Maclaren_Vale.jpg"
+              src="./images/Maclaren_Vale.webp"
               alt="Maclaren Vale"
               class="venue__picture"
             />
@@ -103,7 +107,7 @@
           <div class="venue">
             <div class="venue__del-button"></div>
             <img
-              src="./images/Bumbunga_lake.jpg"
+              src="./images/Bumbunga_lake.webp"
               alt="Bumbunga Lake"
               class="venue__picture"
             />
@@ -113,22 +117,53 @@
             </div>
           </div>
         </div>
-        <div class="popup popup_opened">
-          <form class="popup__container">
-            <label class="popup__title">Editar Perfil</label>
+        <div class="edit-info edit-info_opened">
+          <form class="edit-info__container">
+            <label class="edit-info__title">Edit Profile</label>
             <input
               type="text"
-              class="popup__container-name"
-              placeholder="Nombre"
+              class="edit-info__container-name"
+              placeholder="Name"
             />
             <input
               type="text"
-              class="popup__container-job"
-              placeholder="Acerca de mi"
+              class="edit-info__container-job"
+              placeholder="About me"
             />
-            <button class="popup__container-button">Guardar</button>
-            <div class="popup__container-closebuttton"></div>
+            <button class="edit-info__container-button">Save</button>
+            <div class="edit-info__container-closebuttton"></div>
           </form>
+        </div>
+        <div class="new-image new-image_opened">
+          <form class="new-image__container">
+            <label class="new-image__title">New Place</label>
+            <input
+              type="text"
+              class="new-image__container-town_name"
+              placeholder="Title"
+            />
+            <input
+              type="text"
+              class="new-image__container-img_URL"
+              placeholder="Image URL"
+            />
+            <button class="new-image__container-button">Save</button>
+            <div
+              class="new-image__container-closebuttton"
+              onclick="clearFields()"
+            ></div>
+          </form>
+        </div>
+        <div class="prompted-image prompted-image_opened">
+          <div class="prompted-image__container">
+            <img
+              class="prompted-image__container-picture"
+              src=""
+              alt="Prompted Image"
+            />
+            <p class="prompted-image__container-label"></p>
+            <div class="prompted-image__container-closebuttton"></div>
+          </div>
         </div>
       </main>
       <footer class="footer">

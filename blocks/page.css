@@ -1,6 +1,6 @@
 .page {
   max-width: 880px;
-  max-height: 720px;
+  /* max-height: 720px; */
   font-family: "Inter", sans-serif;
   font-weight: normal;
   line-height: normal;
