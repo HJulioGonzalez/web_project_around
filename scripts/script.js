@@ -99,7 +99,7 @@ function saveNewImg(event) {
     const objClicked = event.target;
     objClicked.setAttribute(
       "style",
-      "background: url(../images/like_ACTIVE.svg)"
+      "background: url(../images/like-filled.svg)"
     );
   }
 
@@ -157,7 +157,7 @@ function likeImage(event) {
   const LikeObjClicked = event.target;
   LikeObjClicked.setAttribute(
     "style",
-    "background: url(../images/like_ACTIVE.svg)"
+    "background: url(../images/like-filled.svg)"
   );
 }
 
