@@ -1,33 +1,35 @@
-let editButton = document.querySelector(".author__editbutton");
+const editButton = document.querySelector(".author__editbutton");
 
 function showEditInfo() {
-  let formWindow = document.querySelector(".edit-info_opened");
+  const formWindow = document.querySelector(".edit-info_opened");
   formWindow.setAttribute("style", "display: flex");
 }
 
 editButton.addEventListener("click", showEditInfo);
 
-let closeButton = document.querySelector(".edit-info__container-closebuttton");
+const closeButton = document.querySelector(
+  ".edit-info__container-closebuttton"
+);
 
 function closeEditForm() {
-  let formWindow = document.querySelector(".edit-info_opened");
+  const formWindow = document.querySelector(".edit-info_opened");
   formWindow.setAttribute("style", "display: none");
 }
 
 closeButton.addEventListener("click", closeEditForm);
 
-let formElement = document.querySelector(".edit-info__container");
+const formElement = document.querySelector(".edit-info__container");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  let nameInput = document.querySelector(".edit-info__container-name");
-  let jobInput = document.querySelector(".edit-info__container-job");
+  const nameInput = document.querySelector(".edit-info__container-name");
+  const jobInput = document.querySelector(".edit-info__container-job");
 
-  let newName = nameInput.value;
-  let newJob = jobInput.value;
+  const newName = nameInput.value;
+  const newJob = jobInput.value;
 
-  let currentName = document.querySelector(".author__info-name");
-  let currentJob = document.querySelector(".author__info-job");
+  const currentName = document.querySelector(".author__info-name");
+  const currentJob = document.querySelector(".author__info-job");
 
   currentName.textContent = newName;
   currentJob.textContent = newJob;
@@ -36,63 +38,65 @@ function handleProfileFormSubmit(evt) {
 formElement.addEventListener("submit", handleProfileFormSubmit);
 formElement.addEventListener("submit", closeEditForm);
 
-let addImageButton = document.querySelector(".author__add-button");
+const addImageButton = document.querySelector(".author__add-button");
 
-let addImageButton2 = document.querySelector(
+const addImageButton2 = document.querySelector(
   ".author__add-button_resolution_1180"
 );
 
 function addNewImgForm() {
-  let formWindow = document.querySelector(".new-image_opened");
+  const formWindow = document.querySelector(".new-image_opened");
   formWindow.setAttribute("style", "display: flex");
 }
 addImageButton.addEventListener("click", addNewImgForm);
 addImageButton2.addEventListener("click", addNewImgForm);
 
-let closeButton2 = document.querySelector(".new-image__container-closebuttton");
+const closeButton2 = document.querySelector(
+  ".new-image__container-closebuttton"
+);
 
 function closeNewImgForm() {
-  let formWindow = document.querySelector(".new-image_opened");
+  const formWindow = document.querySelector(".new-image_opened");
   formWindow.setAttribute("style", "display: none");
 }
 
 function clearFields() {
-  let newImgForm = document.querySelector(".new-image__container");
+  const newImgForm = document.querySelector(".new-image__container");
   newImgForm.reset();
 }
 
 closeButton2.addEventListener("click", closeNewImgForm);
 
-let ImgSaveButton = document.querySelector(".new-image__container-button");
+const ImgSaveButton = document.querySelector(".new-image__container-button");
 
 function saveNewImg(event) {
   event.preventDefault();
-  let formWindow = document.querySelector(".new-image_opened");
+  const formWindow = document.querySelector(".new-image_opened");
   formWindow.setAttribute("style", "display: none");
 
-  let allImgContanier = document.querySelector(".venues");
-  let newImgContainer = document.querySelector(".venue");
+  const allImgContanier = document.querySelector(".venues");
+  const newImgContainer = document.querySelector(".venue");
 
-  let imgCopy = newImgContainer.cloneNode(true);
+  const imgCopy = newImgContainer.cloneNode(true);
   allImgContanier.prepend(imgCopy);
 
-  let imgName = document.querySelector(".new-image__container-town-name");
-  let imgURL = document.querySelector(".new-image__container-img-URL");
-  let currentImg = document.querySelector(".venue__picture");
+  const imgName = document.querySelector(".new-image__container-town-name");
+  const imgURL = document.querySelector(".new-image__container-img-URL");
+  const currentImg = document.querySelector(".venue__picture");
 
-  let newImgName = imgName.value;
-  let newImgURL = imgURL.value;
+  const newImgName = imgName.value;
+  const newImgURL = imgURL.value;
 
-  let currentImgName = document.querySelector(".venue__info-name");
+  const currentImgName = document.querySelector(".venue__info-name");
 
   currentImgName.textContent = newImgName;
   currentImg.setAttribute("src", newImgURL);
   currentImg.setAttribute("alt", newImgName);
 
-  let newLikeButtons = document.querySelectorAll(".venue__info-likebutton");
+  const newLikeButtons = document.querySelectorAll(".venue__info-likebutton");
 
   function likeImage(event) {
-    let objClicked = event.target;
+    const objClicked = event.target;
     objClicked.setAttribute(
       "style",
       "background: url(../images/like_ACTIVE.svg)"
@@ -103,10 +107,10 @@ function saveNewImg(event) {
     newLikeButtons[i].addEventListener("click", likeImage);
   }
 
-  let newDelButtons = document.querySelectorAll(".venue__del-button");
+  const newDelButtons = document.querySelectorAll(".venue__del-button");
 
   function delImage(event) {
-    let delObjClicked = event.target;
+    const delObjClicked = event.target;
     delObjClicked.parentElement.remove();
   }
 
@@ -114,28 +118,28 @@ function saveNewImg(event) {
     newDelButtons[i].addEventListener("click", delImage);
   }
 
-  let newLikeButton = document.querySelector(".venue__info-likebutton");
+  const newLikeButton = document.querySelector(".venue__info-likebutton");
 
   newLikeButton.style.backgroundImage = "url(../images/like_BLACK.svg";
 
-  let newAllImages = document.querySelectorAll(".venue__picture");
+  const newAllImages = document.querySelectorAll(".venue__picture");
 
   function openNewImage(event) {
-    let openedImageForm = document.querySelector(".prompted-image_opened");
+    const openedImageForm = document.querySelector(".prompted-image_opened");
     openedImageForm.setAttribute("style", "display: flex");
 
-    let imgObjClicked = event.target;
-    let clickImgURL = imgObjClicked.getAttribute("src");
-    let clickImgAltTxt = imgObjClicked.getAttribute("alt");
-    let clickImgName =
+    const imgObjClicked = event.target;
+    const clickImgURL = imgObjClicked.getAttribute("src");
+    const clickImgAltTxt = imgObjClicked.getAttribute("alt");
+    const clickImgName =
       imgObjClicked.nextElementSibling.firstElementChild.textContent;
 
-    let clickImgLabel = document.querySelector(
+    const clickImgLabel = document.querySelector(
       ".prompted-image__container-label"
     );
     clickImgLabel.textContent = clickImgName;
 
-    let promptedImgURL = document.querySelector(
+    const promptedImgURL = document.querySelector(
       ".prompted-image__container-picture"
     );
     promptedImgURL.setAttribute("src", clickImgURL);
@@ -150,64 +154,64 @@ function saveNewImg(event) {
 ImgSaveButton.addEventListener("click", saveNewImg);
 
 function likeImage(event) {
-  let LikeObjClicked = event.target;
+  const LikeObjClicked = event.target;
   LikeObjClicked.setAttribute(
     "style",
     "background: url(../images/like_ACTIVE.svg)"
   );
 }
 
-let likeButtons = document.querySelectorAll(".venue__info-likebutton");
+const likeButtons = document.querySelectorAll(".venue__info-likebutton");
 
 for (i = 0; i < likeButtons.length; i++) {
   likeButtons[i].addEventListener("click", likeImage);
 }
 
 function delImage(event) {
-  let delObjClicked = event.target;
+  const delObjClicked = event.target;
   delObjClicked.parentElement.remove();
 }
 
-let delButtons = document.querySelectorAll(".venue__del-button");
+const delButtons = document.querySelectorAll(".venue__del-button");
 
 for (i = 0; i < delButtons.length; i++) {
   delButtons[i].addEventListener("click", delImage);
 }
 
 function openImage(event) {
-  let openedImageForm = document.querySelector(".prompted-image_opened");
+  const openedImageForm = document.querySelector(".prompted-image_opened");
   openedImageForm.setAttribute("style", "display: flex");
 
-  let imgObjClicked = event.target;
-  let clickImgURL = imgObjClicked.getAttribute("src");
-  let clickImgAltTxt = imgObjClicked.getAttribute("alt");
-  let clickImgName =
+  const imgObjClicked = event.target;
+  const clickImgURL = imgObjClicked.getAttribute("src");
+  const clickImgAltTxt = imgObjClicked.getAttribute("alt");
+  const clickImgName =
     imgObjClicked.nextElementSibling.firstElementChild.textContent;
 
-  let clickImgLabel = document.querySelector(
+  const clickImgLabel = document.querySelector(
     ".prompted-image__container-label"
   );
   clickImgLabel.textContent = clickImgName;
 
-  let promptedImgURL = document.querySelector(
+  const promptedImgURL = document.querySelector(
     ".prompted-image__container-picture"
   );
   promptedImgURL.setAttribute("src", clickImgURL);
   promptedImgURL.setAttribute("alt", clickImgAltTxt);
 }
 
-let allImages = document.querySelectorAll(".venue__picture");
+const allImages = document.querySelectorAll(".venue__picture");
 
 for (i = 0; i < allImages.length; i++) {
   allImages[i].addEventListener("click", openImage);
 }
 
 function closeImgForm() {
-  let ImageForm = document.querySelector(".prompted-image_opened");
+  const ImageForm = document.querySelector(".prompted-image_opened");
   ImageForm.setAttribute("style", "display: none");
 }
 
-let promptedImgCloseButton = document.querySelector(
+const promptedImgCloseButton = document.querySelector(
   ".prompted-image__container-closebuttton"
 );
 promptedImgCloseButton.addEventListener("click", closeImgForm);
