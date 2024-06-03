@@ -61,7 +61,7 @@
 }
 
 .venue__info-likebutton:active {
-  background: url(../images/like-filled.svg);
+  background: url(./images/like-filled.svg);
   background-repeat: no-repeat;
   background-position: center;
   opacity: 100%;
