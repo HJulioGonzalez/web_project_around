@@ -1,3 +1,67 @@
+const initialCards = [
+  {
+    name: "Valle de Yosemite",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/yosemite.jpg",
+  },
+  {
+    name: "Lago Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lake-louise.jpg",
+  },
+  {
+    name: "Montañas Calvas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
+  },
+  {
+    name: "Parque Nacional de la Vanoise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/lago.jpg",
+  },
+];
+
+const picNames = initialCards.map(function (item) {
+  return item.name;
+});
+
+const picLinks = initialCards.map(function (item) {
+  return item.link;
+});
+
+const venueTemplate = document.querySelector(".venues__template").content;
+const venuesContainer = document.querySelector(".venues");
+const venueContainer = venueTemplate.querySelector(".venue").cloneNode(true);
+const likeButton = venueContainer.querySelector(".venue__info-likebutton");
+likeButton.setAttribute("src", "./images/like_BLACK.svg");
+
+venuesContainer.append(
+  venueContainer,
+  venueContainer.cloneNode(true),
+  venueContainer.cloneNode(true),
+  venueContainer.cloneNode(true),
+  venueContainer.cloneNode(true),
+  venueContainer.cloneNode(true)
+);
+
+const venueNames = document.querySelectorAll(".venue__info-name");
+const venueNamesArray = Array.from(venueNames);
+
+const textNames = venueNamesArray.map(function (item, i) {
+  return (item.textContent = picNames[i]);
+});
+
+const allVenuePic = document.querySelectorAll(".venue__picture");
+const allVenuePicArray = Array.from(allVenuePic);
+
+const venuePic = allVenuePicArray.map(function (item, i) {
+  return (item.src = picLinks[i]);
+});
+
 const editButton = document.querySelector(".author__editbutton");
 
 function showEditInfo() {
@@ -45,173 +109,140 @@ const addImageButton2 = document.querySelector(
 );
 
 function addNewImgForm() {
-  const formWindow = document.querySelector(".new-image_opened");
-  formWindow.setAttribute("style", "display: flex");
+  const newImageFormTemplate = document.querySelector(
+    ".new-image__template"
+  ).content;
+  const entirePage = document.querySelector(".page");
+  const newImageForm = newImageFormTemplate
+    .querySelector(".new-image")
+    .cloneNode(true);
+
+  entirePage.append(newImageForm);
+
+  document.querySelector(".new-image__title").textContent = "New Place";
+  document.querySelector(".new-image__container-town-name").placeholder =
+    "Town Name";
+  document.querySelector(".new-image__container-img-URL").placeholder =
+    "Image URL";
+
+  const newImgFormCloseButton = document.querySelector(
+    ".new-image__container-closebuttton"
+  );
+
+  newImgFormCloseButton.addEventListener("click", function () {
+    const listItem = newImgFormCloseButton.closest(".new-image");
+    listItem.remove();
+  });
+
+  const saveNewImgButton = document.querySelector(
+    ".new-image__container-button"
+  );
+
+  saveNewImgButton.addEventListener("click", function () {
+    const newVenue = document.querySelector(".venue").cloneNode(true);
+    venuesContainer.prepend(newVenue);
+    const currentNewImgName = document.querySelector(".venue__info-name");
+    const newImgNameEle = document.querySelector(
+      ".new-image__container-town-name"
+    );
+    const newImgName = newImgNameEle.value;
+    currentNewImgName.textContent = newImgName;
+    const newUrlImgEle = document.querySelector(
+      ".new-image__container-img-URL"
+    );
+    const newImgUrlTxt = newUrlImgEle.value;
+    const newUrlImg = document.querySelector(".venue__picture");
+    newUrlImg.setAttribute("src", newImgUrlTxt);
+    const listItem = newImgFormCloseButton.closest(".new-image");
+    listItem.remove();
+
+    const allNewLikeButtons = document.querySelectorAll(
+      ".venue__info-likebutton"
+    );
+    const allNewLikeButtonsArray = Array.from(allNewLikeButtons);
+    const newLikeButtons = allNewLikeButtonsArray.slice(0, -6);
+
+    newLikeButtons.forEach(function (item) {
+      item.addEventListener("click", function (evt) {
+        const objClicked = evt.target;
+        objClicked.setAttribute("src", "./images/like_ACTIVE.png");
+      });
+    });
+
+    const allNewDeleteButtons = document.querySelectorAll(".venue__del-button");
+    const allNewDeleteButtonsArray = Array.from(allNewDeleteButtons);
+    const newDeleteButtons = allNewDeleteButtonsArray.slice(0, -6);
+
+    newDeleteButtons.forEach(function (item) {
+      item.addEventListener("click", function (evt) {
+        const objClicked = evt.target.parentElement;
+        objClicked.remove();
+      });
+    });
+    const updatesVenues = document.querySelectorAll(".venue__picture");
+
+    updatesVenues.forEach(function (item) {
+      item.addEventListener("click", openImages);
+    });
+  });
 }
 addImageButton.addEventListener("click", addNewImgForm);
 addImageButton2.addEventListener("click", addNewImgForm);
 
-const closeButton2 = document.querySelector(
-  ".new-image__container-closebuttton"
-);
+const allLikeButtons = document.querySelectorAll(".venue__info-likebutton");
 
-function closeNewImgForm() {
-  const formWindow = document.querySelector(".new-image_opened");
-  formWindow.setAttribute("style", "display: none");
-}
+allLikeButtons.forEach(function (item) {
+  item.addEventListener("click", function (evt) {
+    const objClicked = evt.target;
+    objClicked.setAttribute("src", "./images/like_ACTIVE.png");
+  });
+});
 
-function clearFields() {
-  const newImgForm = document.querySelector(".new-image__container");
-  newImgForm.reset();
-}
+const allDeleteButtons = document.querySelectorAll(".venue__del-button");
 
-closeButton2.addEventListener("click", closeNewImgForm);
+allDeleteButtons.forEach(function (item) {
+  item.addEventListener("click", function (evt) {
+    const objClicked = evt.target.parentElement;
+    objClicked.remove();
+  });
+});
 
-const ImgSaveButton = document.querySelector(".new-image__container-button");
+function openImages(evt) {
+  const openImageFormTemplate = document.querySelector(
+    ".prompted-image__template"
+  ).content;
+  const entirePage = document.querySelector(".page");
+  const openImageForm = openImageFormTemplate
+    .querySelector(".prompted-image")
+    .cloneNode(true);
 
-function saveNewImg(event) {
-  event.preventDefault();
-  const formWindow = document.querySelector(".new-image_opened");
-  formWindow.setAttribute("style", "display: none");
-
-  const allImgContanier = document.querySelector(".venues");
-  const newImgContainer = document.querySelector(".venue");
-
-  const imgCopy = newImgContainer.cloneNode(true);
-  allImgContanier.prepend(imgCopy);
-
-  const imgName = document.querySelector(".new-image__container-town-name");
-  const imgURL = document.querySelector(".new-image__container-img-URL");
-  const currentImg = document.querySelector(".venue__picture");
-
-  const newImgName = imgName.value;
-  const newImgURL = imgURL.value;
-
-  const currentImgName = document.querySelector(".venue__info-name");
-
-  currentImgName.textContent = newImgName;
-  currentImg.setAttribute("src", newImgURL);
-  currentImg.setAttribute("alt", newImgName);
-
-  const newLikeButtons = document.querySelectorAll(".venue__info-likebutton");
-
-  function likeImage(event) {
-    const objClicked = event.target;
-    objClicked.setAttribute(
-      "style",
-      "background: url(./images/like-filled.svg)"
-    );
-  }
-
-  for (i = 0; i < newLikeButtons.length; i++) {
-    newLikeButtons[i].addEventListener("click", likeImage);
-  }
-
-  const newDelButtons = document.querySelectorAll(".venue__del-button");
-
-  function delImage(event) {
-    const delObjClicked = event.target;
-    delObjClicked.parentElement.remove();
-  }
-
-  for (i = 0; i < newDelButtons.length; i++) {
-    newDelButtons[i].addEventListener("click", delImage);
-  }
-
-  const newLikeButton = document.querySelector(".venue__info-likebutton");
-
-  newLikeButton.style.backgroundImage = "url(../images/like_BLACK.svg";
-
-  const newAllImages = document.querySelectorAll(".venue__picture");
-
-  function openNewImage(event) {
-    const openedImageForm = document.querySelector(".prompted-image_opened");
-    openedImageForm.setAttribute("style", "display: flex");
-
-    const imgObjClicked = event.target;
-    const clickImgURL = imgObjClicked.getAttribute("src");
-    const clickImgAltTxt = imgObjClicked.getAttribute("alt");
-    const clickImgName =
-      imgObjClicked.nextElementSibling.firstElementChild.textContent;
-
-    const clickImgLabel = document.querySelector(
-      ".prompted-image__container-label"
-    );
-    clickImgLabel.textContent = clickImgName;
-
-    const promptedImgURL = document.querySelector(
-      ".prompted-image__container-picture"
-    );
-    promptedImgURL.setAttribute("src", clickImgURL);
-    promptedImgURL.setAttribute("alt", clickImgAltTxt);
-  }
-
-  for (i = 0; i < newAllImages.length; i++) {
-    newAllImages[i].addEventListener("click", openNewImage);
-  }
-}
-
-ImgSaveButton.addEventListener("click", saveNewImg);
-
-function likeImage(event) {
-  const LikeObjClicked = event.target;
-  LikeObjClicked.setAttribute(
-    "style",
-    "background: url(./images/like-filled.svg)"
-  );
-}
-
-const likeButtons = document.querySelectorAll(".venue__info-likebutton");
-
-for (i = 0; i < likeButtons.length; i++) {
-  likeButtons[i].addEventListener("click", likeImage);
-}
-
-function delImage(event) {
-  const delObjClicked = event.target;
-  delObjClicked.parentElement.remove();
-}
-
-const delButtons = document.querySelectorAll(".venue__del-button");
-
-for (i = 0; i < delButtons.length; i++) {
-  delButtons[i].addEventListener("click", delImage);
-}
-
-function openImage(event) {
-  const openedImageForm = document.querySelector(".prompted-image_opened");
-  openedImageForm.setAttribute("style", "display: flex");
-
-  const imgObjClicked = event.target;
-  const clickImgURL = imgObjClicked.getAttribute("src");
-  const clickImgAltTxt = imgObjClicked.getAttribute("alt");
-  const clickImgName =
-    imgObjClicked.nextElementSibling.firstElementChild.textContent;
-
-  const clickImgLabel = document.querySelector(
-    ".prompted-image__container-label"
-  );
-  clickImgLabel.textContent = clickImgName;
-
-  const promptedImgURL = document.querySelector(
+  entirePage.append(openImageForm);
+  const imgClicked = evt.target;
+  console.log(imgClicked);
+  const imgClickedURL = imgClicked.getAttribute("src");
+  const openedImage = document.querySelector(
     ".prompted-image__container-picture"
   );
-  promptedImgURL.setAttribute("src", clickImgURL);
-  promptedImgURL.setAttribute("alt", clickImgAltTxt);
+  openedImage.setAttribute("src", imgClickedURL);
+  const imgClickedNameObj = imgClicked.nextElementSibling.firstElementChild;
+  const imgClickedName = imgClickedNameObj.textContent;
+  const openedImageName = document.querySelector(
+    ".prompted-image__container-label"
+  );
+  openedImageName.textContent = imgClickedName;
+
+  function closeOpenedImg() {
+    entirePage.lastElementChild.remove();
+  }
+
+  const openedImgCloseButton = document.querySelector(
+    ".prompted-image__container-closebuttton"
+  );
+  openedImgCloseButton.addEventListener("click", closeOpenedImg);
 }
 
-const allImages = document.querySelectorAll(".venue__picture");
+const allVenues = document.querySelectorAll(".venue__picture");
 
-for (i = 0; i < allImages.length; i++) {
-  allImages[i].addEventListener("click", openImage);
-}
-
-function closeImgForm() {
-  const ImageForm = document.querySelector(".prompted-image_opened");
-  ImageForm.setAttribute("style", "display: none");
-}
-
-const promptedImgCloseButton = document.querySelector(
-  ".prompted-image__container-closebuttton"
-);
-promptedImgCloseButton.addEventListener("click", closeImgForm);
+allVenues.forEach(function (item) {
+  item.addEventListener("click", openImages);
+});

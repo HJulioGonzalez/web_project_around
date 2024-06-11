@@ -6,13 +6,11 @@
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  display: flex;
 }
 
-.prompted-image_opened {
-  display: none;
-}
 .prompted-image__container {
-  width: 70%;
+  width: 50%;
   color: #000;
   margin: auto;
   border-radius: 10px;
@@ -21,20 +19,24 @@
   padding: 0;
   box-sizing: border-box;
   position: relative;
+  align-items: center;
 }
 
 .prompted-image__container-picture {
   width: 100%;
   margin: auto;
+  display: flex;
 }
 
 .prompted-image__container-label {
   margin: 10px 0 0;
-  width: 32.477%;
+  width: 100%;
   height: 12px;
   font-size: 16px;
   line-height: 1.21;
   color: #fff;
+  align-items: center;
+  display: flex;
 }
 
 .prompted-image__container-closebuttton {

@@ -59,13 +59,13 @@
 .venue__info-likebutton:hover {
   opacity: 60%;
 }
-
+/* 
 .venue__info-likebutton:active {
   background: url(./images/like-filled.svg);
   background-repeat: no-repeat;
   background-position: center;
   opacity: 100%;
-}
+} */
 
 @media screen and (min-width: 846px) and (max-width: 1280px) {
   .venue {

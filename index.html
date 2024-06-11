@@ -39,84 +39,34 @@
           </div>
           <div
             class="author__add-button author__add-button_resolution_1180"
-            onclick="clearFields()"
           ></div>
         </div>
         <div class="venues">
-          <div class="venue">
-            <div class="venue__del-button"></div>
-            <img
-              src="./images/hahndorf_place.jpg"
-              alt="Town of Hahndorf"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">Hahndorf Town</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
-          <div class="venue">
-            <div class="venue__del-button"></div>
-            <img
-              src="./images/Maclaren_Vale.webp"
-              alt="Maclaren Vale"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">Maclaren Vale</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
-          <div class="venue">
-            <div class="venue__del-button"></div>
-
-            <img
-              src="./images/Victor_Harbour.jpg"
-              alt="Victor Harbour"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">Victor Harbour</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
-          <div class="venue">
-            <div class="venue__del-button"></div>
-            <img
-              src="./images/Glenelg_Beach.jpg"
-              alt="Glenelg Beach"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">Glenelg Beach</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
-          <div class="venue">
-            <div class="venue__del-button"></div>
-            <img
-              src="./images/York_Peninsula.jpg"
-              alt="York Peninsula Town"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">York Peninsula Town</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
-          <div class="venue">
-            <div class="venue__del-button"></div>
-            <img
-              src="./images/Bumbunga_lake.webp"
-              alt="Bumbunga Lake"
-              class="venue__picture"
-            />
-            <div class="venue__info">
-              <p class="venue__info-name">Bumbunga Lake</p>
-              <div class="venue__info-likebutton"></div>
-            </div>
-          </div>
+          <template class="venues__template">
+            <div class="venue">
+              <div class="venue__del-button"></div>
+              <img
+                class="venue__picture"
+              />
+              <div class="venue__info">
+                <p class="venue__info-name"></p>
+                <img class="venue__info-likebutton">
+              </div>
+          </template>
         </div>
+        <template class="new-image__template">
+          <div class="new-image">
+            <div class="new-image__container">
+              <label class="new-image__title"></label>
+              <input type="text" class="new-image__container-town-name">
+              <input type="text" class="new-image__container-img-URL">
+              <button class="new-image__container-button">Save</button>
+              <div
+              class="new-image__container-closebuttton"
+              ></div>
+            </div>
+          </div>
+        </template>
         <div class="edit-info edit-info_opened">
           <form class="edit-info__container">
             <label class="edit-info__title">Edit Profile</label>
@@ -134,37 +84,18 @@
             <div class="edit-info__container-closebuttton"></div>
           </form>
         </div>
-        <div class="new-image new-image_opened">
-          <form class="new-image__container">
-            <label class="new-image__title">New Place</label>
-            <input
-              type="text"
-              class="new-image__container-town-name"
-              placeholder="Title"
-            />
-            <input
-              type="text"
-              class="new-image__container-img-URL"
-              placeholder="Image URL"
-            />
-            <button class="new-image__container-button">Save</button>
-            <div
-              class="new-image__container-closebuttton"
-              onclick="clearFields()"
-            ></div>
-          </form>
-        </div>
-        <div class="prompted-image prompted-image_opened">
-          <div class="prompted-image__container">
-            <img
-              class="prompted-image__container-picture"
-              alt="Prompted Image"
-              src="//:0"
-            />
-            <p class="prompted-image__container-label"></p>
-            <div class="prompted-image__container-closebuttton"></div>
+        <template class="prompted-image__template">
+          <div class="prompted-image">
+            <div class="prompted-image__container">
+              <img
+                class="prompted-image__container-picture"
+                alt="Prompted Image"
+              />
+              <p class="prompted-image__container-label"></p>
+              <div class="prompted-image__container-closebuttton"></div>
+            </div>
           </div>
-        </div>
+        </template>
       </main>
       <footer class="footer">
         <div class="footer__icons">
