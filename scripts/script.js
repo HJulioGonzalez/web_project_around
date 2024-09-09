@@ -195,6 +195,7 @@ allLikeButtons.forEach(function (item) {
   item.addEventListener("click", function (evt) {
     const objClicked = evt.target;
     objClicked.setAttribute("src", "./images/like_ACTIVE.png");
+    console.log(objClicked);
   });
 });
 
