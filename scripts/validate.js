@@ -70,6 +70,14 @@ const enableValidation = () => {
   formlist.forEach((formElement) => {
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      const saveFormButton = document.querySelectorAll(
+        enableValidationElements.submitButtonSelector
+      );
+      const saveFormButtonList = Array.from(saveFormButton);
+      saveFormButtonList.forEach((button) => {
+        button.classList.add(enableValidationElements.inactiveButtonClass);
+        button.setAttribute("disabled", "true");
+      });
     });
     setEventListeners(formElement);
   });
