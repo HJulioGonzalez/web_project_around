@@ -37,10 +37,10 @@
 .venue__info-name {
   color: #000;
   margin: 0;
-  font-weight: 900;
+  font-family: "Inter Black";
   font-size: 24px;
   line-height: 1.21;
-  width: 180px;
+  width: auto;
   height: 30px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -59,7 +59,7 @@
 .venue__info-likebutton:hover {
   opacity: 60%;
 }
-/* 
+/*
 .venue__info-likebutton:active {
   background: url(./images/like-filled.svg);
   background-repeat: no-repeat;
@@ -73,7 +73,7 @@
   }
 
   .venue__info-name {
-    font-size: 1.9vw;
+    font-size: 1.5vw;
   }
 
   .venue__picture {

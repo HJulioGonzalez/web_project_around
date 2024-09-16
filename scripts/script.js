@@ -65,8 +65,8 @@ const venuePic = allVenuePicArray.map(function (item, i) {
 const editButton = document.querySelector(".author__editbutton");
 
 function showEditInfo() {
-  const formWindow = document.querySelector(".edit-info_opened");
-  formWindow.setAttribute("style", "display: flex");
+  const formWindow = document.querySelector(".edit-info");
+  formWindow.classList.add("edit-info_opened");
 }
 
 editButton.addEventListener("click", showEditInfo);
@@ -77,12 +77,77 @@ const closeButton = document.querySelector(
 
 function closeEditForm() {
   const formWindow = document.querySelector(".edit-info_opened");
-  formWindow.setAttribute("style", "display: none");
+  formWindow.classList.remove("edit-info_opened");
+  const nameInput = document.querySelector(".edit-info__container-name");
+  const jobInput = document.querySelector(".edit-info__container-job");
+
+  nameInput.value = "";
+  jobInput.value = "";
 }
+
+const editInfoWindow = document.querySelector(".edit-info");
 
 closeButton.addEventListener("click", closeEditForm);
 
-const formElement = document.querySelector(".edit-info__container");
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit-info")) {
+    const formWindow = document.querySelector(".edit-info_opened");
+    formWindow.classList.remove("edit-info_opened");
+    const nameInput = document.querySelector(".edit-info__container-name");
+    const jobInput = document.querySelector(".edit-info__container-job");
+
+    nameInput.value = "";
+    jobInput.value = "";
+  } else {
+    if (e.target.classList.contains("new-picture")) {
+      const newImageForm = document.querySelector(".new-picture");
+      newImageForm.classList.remove("new-picture_opened");
+      const newImgNameEle = document.querySelector(
+        ".new-picture__container-town-name"
+      );
+      const newUrlImgEle = document.querySelector(
+        ".new-picture__container-img-URL"
+      );
+      newImgNameEle.value = "";
+      newUrlImgEle.value = "";
+    }
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (
+    e.key === "Escape" &&
+    document.querySelector(".new-picture").classList.contains("new-picture")
+  ) {
+    const newImageForm = document.querySelector(".new-picture");
+    newImageForm.classList.remove("new-picture_opened");
+    const newImgNameEle = document.querySelector(
+      ".new-picture__container-town-name"
+    );
+    const newUrlImgEle = document.querySelector(
+      ".new-picture__container-img-URL"
+    );
+    newImgNameEle.value = "";
+    newUrlImgEle.value = "";
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (
+    e.key === "Escape" &&
+    document.querySelector(".edit-info").classList.contains("edit-info")
+  ) {
+    const editInfoWindow = document.querySelector(".edit-info");
+    editInfoWindow.classList.remove("edit-info_opened");
+    const nameInput = document.querySelector(".edit-info__container-name");
+    const jobInput = document.querySelector(".edit-info__container-job");
+
+    nameInput.value = "";
+    jobInput.value = "";
+  }
+});
+
+const editInfoForm = document.querySelector(".edit-info__container");
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
@@ -99,8 +164,8 @@ function handleProfileFormSubmit(evt) {
   currentJob.textContent = newJob;
 }
 
-formElement.addEventListener("submit", handleProfileFormSubmit);
-formElement.addEventListener("submit", closeEditForm);
+editInfoForm.addEventListener("submit", handleProfileFormSubmit);
+editInfoForm.addEventListener("submit", closeEditForm);
 
 const addImageButton = document.querySelector(".author__add-button");
 
@@ -109,85 +174,88 @@ const addImageButton2 = document.querySelector(
 );
 
 function addNewImgForm() {
-  const newImageFormTemplate = document.querySelector(
-    ".new-image__template"
-  ).content;
-  const entirePage = document.querySelector(".page");
-  const newImageForm = newImageFormTemplate
-    .querySelector(".new-image")
-    .cloneNode(true);
-
-  entirePage.append(newImageForm);
-
-  document.querySelector(".new-image__title").textContent = "New Place";
-  document.querySelector(".new-image__container-town-name").placeholder =
-    "Town Name";
-  document.querySelector(".new-image__container-img-URL").placeholder =
-    "Image URL";
-
-  const newImgFormCloseButton = document.querySelector(
-    ".new-image__container-closebuttton"
-  );
-
-  newImgFormCloseButton.addEventListener("click", function () {
-    const listItem = newImgFormCloseButton.closest(".new-image");
-    listItem.remove();
-  });
-
-  const saveNewImgButton = document.querySelector(
-    ".new-image__container-button"
-  );
-
-  saveNewImgButton.addEventListener("click", function () {
-    const newVenue = document.querySelector(".venue").cloneNode(true);
-    venuesContainer.prepend(newVenue);
-    const currentNewImgName = document.querySelector(".venue__info-name");
-    const newImgNameEle = document.querySelector(
-      ".new-image__container-town-name"
-    );
-    const newImgName = newImgNameEle.value;
-    currentNewImgName.textContent = newImgName;
-    const newUrlImgEle = document.querySelector(
-      ".new-image__container-img-URL"
-    );
-    const newImgUrlTxt = newUrlImgEle.value;
-    const newUrlImg = document.querySelector(".venue__picture");
-    newUrlImg.setAttribute("src", newImgUrlTxt);
-    const listItem = newImgFormCloseButton.closest(".new-image");
-    listItem.remove();
-
-    const allNewLikeButtons = document.querySelectorAll(
-      ".venue__info-likebutton"
-    );
-    const allNewLikeButtonsArray = Array.from(allNewLikeButtons);
-    const newLikeButtons = allNewLikeButtonsArray.slice(0, -6);
-
-    newLikeButtons.forEach(function (item) {
-      item.addEventListener("click", function (evt) {
-        const objClicked = evt.target;
-        objClicked.setAttribute("src", "./images/like_ACTIVE.png");
-      });
-    });
-
-    const allNewDeleteButtons = document.querySelectorAll(".venue__del-button");
-    const allNewDeleteButtonsArray = Array.from(allNewDeleteButtons);
-    const newDeleteButtons = allNewDeleteButtonsArray.slice(0, -6);
-
-    newDeleteButtons.forEach(function (item) {
-      item.addEventListener("click", function (evt) {
-        const objClicked = evt.target.parentElement;
-        objClicked.remove();
-      });
-    });
-    const updatesVenues = document.querySelectorAll(".venue__picture");
-
-    updatesVenues.forEach(function (item) {
-      item.addEventListener("click", openImages);
-    });
-  });
+  const newImageForm = document.querySelector(".new-picture");
+  newImageForm.classList.add("new-picture_opened");
 }
+
 addImageButton.addEventListener("click", addNewImgForm);
 addImageButton2.addEventListener("click", addNewImgForm);
+
+const saveNewImgButton = document.querySelector(
+  ".new-picture__container-button"
+);
+
+function saveNewImg() {
+  const newVenue = document.querySelector(".venue").cloneNode(true);
+  venuesContainer.prepend(newVenue);
+  const currentNewImgName = document.querySelector(".venue__info-name");
+  const newImgNameEle = document.querySelector(
+    ".new-picture__container-town-name"
+  );
+  const newImgName = newImgNameEle.value;
+  currentNewImgName.textContent = newImgName;
+  const newUrlImgEle = document.querySelector(
+    ".new-picture__container-img-URL"
+  );
+  const newImgUrlTxt = newUrlImgEle.value;
+  const newUrlImg = document.querySelector(".venue__picture");
+  newUrlImg.setAttribute("src", newImgUrlTxt);
+
+  const allNewLikeButtons = document.querySelectorAll(
+    ".venue__info-likebutton"
+  );
+  const allNewLikeButtonsArray = Array.from(allNewLikeButtons);
+  const newLikeButtons = allNewLikeButtonsArray.slice(0, -6);
+
+  newLikeButtons.forEach(function (item) {
+    item.addEventListener("click", function (evt) {
+      const objClicked = evt.target;
+      objClicked.setAttribute("src", "./images/like_ACTIVE.png");
+    });
+  });
+
+  const allNewDeleteButtons = document.querySelectorAll(".venue__del-button");
+  const allNewDeleteButtonsArray = Array.from(allNewDeleteButtons);
+  const newDeleteButtons = allNewDeleteButtonsArray.slice(0, -6);
+
+  newDeleteButtons.forEach(function (item) {
+    item.addEventListener("click", function (evt) {
+      const objClicked = evt.target.parentElement;
+      objClicked.remove();
+    });
+  });
+  const updatesVenues = document.querySelectorAll(".venue__picture");
+
+  updatesVenues.forEach(function (item) {
+    item.addEventListener("click", openImages);
+  });
+}
+
+const newImgFormCloseButton = document.querySelector(
+  ".new-picture__container-closebuttton"
+);
+
+function closeNewImgForm() {
+  const newImageForm = document.querySelector(".new-picture");
+  newImageForm.classList.remove("new-picture_opened");
+  const newImgNameEle = document.querySelector(
+    ".new-picture__container-town-name"
+  );
+  const newUrlImgEle = document.querySelector(
+    ".new-picture__container-img-URL"
+  );
+  newImgNameEle.value = "";
+  newUrlImgEle.value = "";
+}
+
+const newImgWindow = document.querySelector(".new-picture");
+
+newImgFormCloseButton.addEventListener("click", closeNewImgForm);
+
+const newImgForm = document.querySelector(".new-picture__container");
+
+newImgForm.addEventListener("submit", saveNewImg);
+newImgForm.addEventListener("submit", closeNewImgForm);
 
 const allLikeButtons = document.querySelectorAll(".venue__info-likebutton");
 
@@ -219,7 +287,6 @@ function openImages(evt) {
 
   entirePage.append(openImageForm);
   const imgClicked = evt.target;
-  console.log(imgClicked);
   const imgClickedURL = imgClicked.getAttribute("src");
   const openedImage = document.querySelector(
     ".prompted-image__container-picture"

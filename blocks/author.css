@@ -20,10 +20,10 @@
 
 .author__info-name {
   margin: 0 17px 0 0;
-  font-weight: 500;
+  font-family: "Inter Medium";
   font-size: 42px;
   line-height: 1.3333;
-  width: 208px;
+  width: 90%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -31,7 +31,7 @@
 
 .author__info-job {
   margin: 0;
-  font-weight: 400;
+  font-family: "Inter Regular";
   font-size: 18px;
   line-height: 1.21;
 }

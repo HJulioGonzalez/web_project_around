@@ -45,43 +45,79 @@
           <template class="venues__template">
             <div class="venue">
               <div class="venue__del-button"></div>
-              <img
-                class="venue__picture"
-              />
+              <img class="venue__picture" />
               <div class="venue__info">
                 <p class="venue__info-name"></p>
-                <img class="venue__info-likebutton">
+                <img class="venue__info-likebutton" />
               </div>
+            </div>
           </template>
         </div>
-        <template class="new-image__template">
-          <div class="new-image">
-            <div class="new-image__container">
-              <label class="new-image__title"></label>
-              <input type="text" class="new-image__container-town-name">
-              <input type="text" class="new-image__container-img-URL">
-              <button class="new-image__container-button">Save</button>
-              <div
-              class="new-image__container-closebuttton"
-              ></div>
-            </div>
-          </div>
-        </template>
-        <div class="edit-info edit-info_opened">
-          <form class="edit-info__container">
+
+        <div class="edit-info">
+          <form class="edit-info__container form" novalidate>
             <label class="edit-info__title">Edit Profile</label>
             <input
               type="text"
-              class="edit-info__container-name"
+              class="edit-info__container-name form__input"
               placeholder="Name"
+              minlength="2"
+              maxlength="40"
+              required
+              id="name-input"
             />
+            <span class="name-input-error form__input-error"
+              >Por favor, rellena este campo</span
+            >
             <input
               type="text"
-              class="edit-info__container-job"
+              class="edit-info__container-job form__input"
               placeholder="About me"
+              minlength="2"
+              maxlength="200"
+              required
+              id="job-input"
             />
-            <button class="edit-info__container-button">Save</button>
+            <span class="job-input-error form__input-error"
+              >Por favor, rellena este campo</span
+            >
+            <button
+              class="edit-info__container-button edit-info__submit form__submit"
+            >
+              Save
+            </button>
             <div class="edit-info__container-closebuttton"></div>
+          </form>
+        </div>
+        <div class="new-picture">
+          <form class="new-picture__container form" novalidate>
+            <label class="new-picture__title">Nuevo lugar</label>
+            <input
+              type="text"
+              class="new-picture__container-town-name form__input"
+              id="town-name-input"
+              minlength="2"
+              maxlength="30"
+              placeholder="Titulo"
+              required
+            />
+            <span class="town-name-input-error form__input-error"
+              >Por favor, rellena este campo</span
+            >
+            <input
+              type="url"
+              class="new-picture__container-img-URL form__input"
+              id="url-input"
+              placeholder="URL de la imagen"
+              required
+            />
+            <span class="url-input-error form__input-error"
+              >Por favor, rellena este campo</span
+            >
+            <button class="new-picture__container-button form__submit">
+              Save
+            </button>
+            <div class="new-picture__container-closebuttton"></div>
           </form>
         </div>
         <template class="prompted-image__template">
@@ -131,5 +167,6 @@
       </footer>
     </div>
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
