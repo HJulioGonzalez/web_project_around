@@ -48,7 +48,7 @@
               <img class="venue__picture" />
               <div class="venue__info">
                 <p class="venue__info-name"></p>
-                <img class="venue__info-likebutton" />
+                <img src="./images/like_BLACK.svg" class="venue__info-likebutton" />
               </div>
             </div>
           </template>
@@ -106,11 +106,13 @@
             >
             <input
               type="url"
+              list="Australia-towns"
               class="new-picture__container-img-URL form__input"
               id="url-input"
               placeholder="URL de la imagen"
               required
             />
+
             <span class="url-input-error form__input-error"
               >Por favor, rellena este campo</span
             >
@@ -166,7 +168,12 @@
         <p class="footer__copyright">&#169; 2024 Habib Julio</p>
       </footer>
     </div>
-    <script src="./scripts/script.js"></script>
-    <script src="./scripts/validate.js"></script>
+    <!-- <script src="./scripts/script.js"></script>
+    <script src="./scripts/validate.js"></script> -->
+    <script type="module" src="./scripts/index.js"></script>
+    <script type="module" src="./scripts/Card.js"></script>
+    <script type="module" src="./scripts/utils.js"></script>
+    <script type="module" src="./scripts/FormValidator.js"></script>
+  </body>
   </body>
 </html>
