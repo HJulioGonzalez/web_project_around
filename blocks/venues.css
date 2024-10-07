@@ -12,8 +12,8 @@
 
 @media screen and (min-width: 1281px) {
   .venues {
-    gap: 20px 17px;
-    width: 880px;
+    gap: 20px 1.93%;
+    /* width: 880px; */
   }
 }
 

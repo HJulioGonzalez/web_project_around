@@ -13,7 +13,9 @@
 
 @media screen and (min-width: 1281px) {
   .page {
-    padding: 0 200px;
+    /* padding: auto; */
+    max-width: 100%;
+    margin: 0;
   }
 }
 

@@ -24,8 +24,21 @@ export class Card {
 
   _likeFunction() {
     const likeButton = this._element.querySelector(".venue__info-likebutton");
+    var clicks = 0;
     likeButton.addEventListener("click", () => {
-      likeButton.setAttribute("src", "./images/like_ACTIVE.png");
+      const number = clicks++;
+      number % 2 === 0
+        ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
+        : likeButton.setAttribute("src", "./images/like_BLACK.svg");
+    });
+  }
+
+  _unLikeFunction() {
+    const likeButton = this._element.querySelector(".venue__info-likebutton");
+    likeButton.addEventListener("click", (evt) => {
+      evt.target.getAttribute("src") === "./images/like_ACTIVE.png"
+        ? likeButton.setAttribute("src", "./images/like_BLACK.svg")
+        : console.log("habib");
     });
   }
 
