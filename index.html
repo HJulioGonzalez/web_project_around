@@ -34,7 +34,6 @@
             <p class="author__info-job">Explorador</p>
             <div
               class="author__add-button author__add-button_resolution_725"
-              onclick="clearFields()"
             ></div>
           </div>
           <div
@@ -48,80 +47,91 @@
               <img class="venue__picture" />
               <div class="venue__info">
                 <p class="venue__info-name"></p>
-                <img src="./images/like_BLACK.svg" class="venue__info-likebutton" />
+                <img
+                  src="./images/like_BLACK.svg"
+                  class="venue__info-likebutton"
+                />
               </div>
             </div>
           </template>
         </div>
+        <template class="edit-info__template">
+          <div class="edit-info">
+            <form class="edit-info__container form" novalidate>
+              <label class="edit-info__title" for="name-input"
+                >Edit Profile</label
+              >
+              <input
+                type="text"
+                class="edit-info__container-name form__input"
+                placeholder="Name"
+                minlength="2"
+                maxlength="40"
+                required
+                id="name-input"
+                autocomplete="name"
+              />
+              <span class="name-input-error form__input-error"
+                >Por favor, rellena este campo</span
+              >
+              <input
+                type="text"
+                class="edit-info__container-job form__input"
+                placeholder="About me"
+                minlength="2"
+                maxlength="200"
+                required
+                id="job-input"
+                autocomplete="title"
+              />
+              <span class="job-input-error form__input-error"
+                >Por favor, rellena este campo</span
+              >
+              <button
+                class="edit-info__container-button edit-info__submit form__submit"
+              >
+                Save
+              </button>
+            </form>
+            <div class="edit-info-closebuttton"></div>
+          </div>
+        </template>
+        <template class="new-picture__template">
+          <div class="new-picture">
+            <form class="new-picture__container form" novalidate>
+              <label class="new-picture__title" for="name">Nuevo lugar</label>
+              <input
+                type="text"
+                class="new-picture__container-town-name form__input"
+                id="name"
+                minlength="2"
+                maxlength="30"
+                placeholder="Titulo"
+                required
+                autocomplete="off"
+              />
+              <span class="town-name-input-error form__input-error"
+                >Por favor, rellena este campo</span
+              >
+              <input
+                type="url"
+                class="new-picture__container-img-URL form__input"
+                id="link"
+                placeholder="URL de la imagen"
+                required
+                autocomplete="off"
+              />
 
-        <div class="edit-info">
-          <form class="edit-info__container form" novalidate>
-            <label class="edit-info__title">Edit Profile</label>
-            <input
-              type="text"
-              class="edit-info__container-name form__input"
-              placeholder="Name"
-              minlength="2"
-              maxlength="40"
-              required
-              id="name-input"
-            />
-            <span class="name-input-error form__input-error"
-              >Por favor, rellena este campo</span
-            >
-            <input
-              type="text"
-              class="edit-info__container-job form__input"
-              placeholder="About me"
-              minlength="2"
-              maxlength="200"
-              required
-              id="job-input"
-            />
-            <span class="job-input-error form__input-error"
-              >Por favor, rellena este campo</span
-            >
-            <button
-              class="edit-info__container-button edit-info__submit form__submit"
-            >
-              Save
-            </button>
-            <div class="edit-info__container-closebuttton"></div>
-          </form>
-        </div>
-        <div class="new-picture">
-          <form class="new-picture__container form" novalidate>
-            <label class="new-picture__title">Nuevo lugar</label>
-            <input
-              type="text"
-              class="new-picture__container-town-name form__input"
-              id="town-name-input"
-              minlength="2"
-              maxlength="30"
-              placeholder="Titulo"
-              required
-            />
-            <span class="town-name-input-error form__input-error"
-              >Por favor, rellena este campo</span
-            >
-            <input
-              type="url"
-              list="Australia-towns"
-              class="new-picture__container-img-URL form__input"
-              id="url-input"
-              placeholder="URL de la imagen"
-              required
-            />
-
-            <span class="url-input-error form__input-error"
-              >Por favor, rellena este campo</span
-            >
-            <button class="new-picture__container-button form__submit">
-              Save
-            </button>
-            <div class="new-picture__container-closebuttton"></div>
-          </form>
-        </div>
+              <span class="url-input-error form__input-error"
+                >Por favor, rellena este campo</span
+              >
+              <button class="new-picture__container-button form__submit">
+                Save
+              </button>
+            </form>
+            <div class="new-picture-closebuttton"></div>
+          </div>
+        </template>
         <template class="prompted-image__template">
           <div class="prompted-image">
             <div class="prompted-image__container">
@@ -168,12 +178,6 @@
         <p class="footer__copyright">&#169; 2024 Habib Julio</p>
       </footer>
     </div>
-    <!-- <script src="./scripts/script.js"></script>
-    <script src="./scripts/validate.js"></script> -->
-    <script type="module" src="./scripts/index.js"></script>
-    <script type="module" src="./scripts/Card.js"></script>
-    <script type="module" src="./scripts/utils.js"></script>
-    <script type="module" src="./scripts/FormValidator.js"></script>
-  </body>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
