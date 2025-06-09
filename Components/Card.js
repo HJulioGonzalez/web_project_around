@@ -7,7 +7,7 @@ import {
   deleteButtonSelector,
   confirmationFormTemplate, 
   FormRenderer,
-  delImgConfirmationSelector
+  delImgConfirmationSelector, likeStatusActiveSelector, likeStatusInactiveSelector
 } from "../utils/constants.js";
 import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
 export class Card {
@@ -42,7 +42,7 @@ export class Card {
   likeButton(cardId, baseUrl, headersAuthorization, likeStatus) {
     this._likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
-      likeRealTime();
+      this.likeRealTime(likeStatus);
       const method = !likeStatus? "PUT" : "DELETE";
          fetch(`${baseUrl}/cards/${cardId}/likes`, {
             method: method,
@@ -69,9 +69,10 @@ export class Card {
       //   ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
       //   : likeButton.setAttribute("src", "./images/like_BLACK.svg");
     });
-    function likeRealTime(params) {
-     console.log("change icon") 
-    }
+  }
+
+  likeRealTime(likeStatus){
+     !likeStatus? console.log("active icon", this._likeButton) : console.log("inactive icon")
   }
 
 
