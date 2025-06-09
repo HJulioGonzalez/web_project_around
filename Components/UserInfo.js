@@ -4,6 +4,7 @@ import {
   currentUserNameSelector,
   currentUserJobSelector,
   FormRenderer,
+  newInfoFormTemplate
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 export class UserInfo {
@@ -14,7 +15,7 @@ export class UserInfo {
 
   _getTemplate() {
     const newUserInfoTemplate = document
-      .querySelector(".edit-info__template")
+      .querySelector(newInfoFormTemplate)
       .content.querySelector(popUpUserInfoSelector)
       .cloneNode(true);
     return newUserInfoTemplate;
@@ -84,6 +85,7 @@ export class UserInfo {
         const jobElement = document.querySelector(currentUserJobSelector);
         nameElement.textContent = newUserInfo.name;
         jobElement.textContent = newUserInfo.about;
+        console.log("se ejecutó el cambio en el DOM");
       })
       .catch((err) => {
         console.log(err);

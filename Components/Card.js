@@ -5,7 +5,11 @@ import {
   cardTemplate,
   allCardsListSelector,
   deleteButtonSelector,
+  confirmationFormTemplate, 
+  FormRenderer,
+  delImgConfirmationSelector
 } from "../utils/constants.js";
+import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
 export class Card {
   constructor(data) {
     this._townTitle = data.name;
@@ -21,18 +25,71 @@ export class Card {
     return cardElement;
   }
 
-  likeButton(likeMode, baseUrl, headersAuthorization, cardsData) {
+  generateCard(cardId, baseUrl, headersAuthorization, likeStatus) {
+    this._element = this._getTemplate();
+    this._likeButton = this._element.querySelector(likeButtonSelector);
+    !likeStatus?"":this._likeButton.setAttribute("src", "./images/like_ACTIVE.png");
+    this.likeButton(cardId, baseUrl, headersAuthorization, likeStatus);
+    this.delPicForm(cardId, baseUrl, headersAuthorization);
+    this._element.querySelector(cardPicSelector).src = this._townUrl;
+    this._element.querySelector(townNameSelector).textContent = this._townTitle;
+    return this._element;
+  }
+
+  likeButton(cardId, baseUrl, headersAuthorization, likeStatus) {
     const likeButton = this._element.querySelector(likeButtonSelector);
-    var likeClicks = 0;
+    // var likeClicks = 0;
     likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
       console.log(
-        "like button has been clicked",
-        likeMode,
-        baseUrl,
-        headersAuthorization,
-        cardsData
+        "like button has been clicked", 
       );
+      if (!likeStatus) {
+        console.log("you have liked the picture", likeStatus);
+        likeButton.setAttribute("src", "./images/like_ACTIVE.png");
+        return fetch(`${baseUrl}/cards/${cardId}/likes`, {
+            method: "PUT",
+            headers: {
+              authorization: headersAuthorization,
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+              return Promise.reject(`Error: ${res.status}`);
+            })
+            .then(data =>{
+              console.log(data)
+            })
+            .catch((err) => {
+              console.log(err);
+              return [];
+            });
+      } else {
+        console.log("you have unliked the picture");
+        likeButton.setAttribute("src", "./images/like_BLACK.png");
+        return fetch(`${baseUrl}/cards/${cardId}/likes`, {
+            method: "DELETE",
+            headers: {
+              authorization: headersAuthorization,
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+              return Promise.reject(`Error: ${res.status}`);
+            })
+            .then(data =>{
+              console.log(data)
+            })
+            .catch((err) => {
+              console.log(err);
+              return [];
+            });
+      }
+      
       // const number = likeClicks++;
       // number % 2 === 0
       //   ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
@@ -40,20 +97,66 @@ export class Card {
     });
   }
 
-  _deletePicture() {
+  delPicForm(cardId, baseUrl, headersAuthorization) {
     const deleteButton = this._element.querySelector(deleteButtonSelector);
-    deleteButton.addEventListener("click", (evt) => {
+    this._confirmSection = new PopupWithConfirmation({ popup: confirmationFormTemplate});
+    deleteButton.addEventListener("click", evt=>{
       evt.preventDefault();
-      deleteButton.parentElement.remove();
+      console.log("delete button has been clicked");
+    this._confirmElement = this._confirmSection.generateForm();
+    FormRenderer.addItem(this._confirmElement);
+    this._setEventListeners(cardId, baseUrl, headersAuthorization);
     });
   }
 
-  generateCard(likeMode, baseUrl, headersAuthorization) {
-    this._element = this._getTemplate();
-    this.likeButton(likeMode, baseUrl, headersAuthorization);
-    this._deletePicture();
-    this._element.querySelector(cardPicSelector).src = this._townUrl;
-    this._element.querySelector(townNameSelector).textContent = this._townTitle;
-    return this._element;
+  _setEventListeners(cardId, baseUrl, headersAuthorization){
+    this._confirmForm = this._confirmElement.firstElementChild; 
+    this._confirmButton = this._confirmForm.elements.confirmationButton;
+    this._confirmDelButton = this._confirmForm.elements.popupDeleteCloseButton;
+    this._confirmForm.addEventListener("submit", (evt)=>{
+      evt.preventDefault();
+      this._confirmElement.remove();
+      this._element.remove();
+      fetch(`${baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: headersAuthorization,
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then(data => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    });
+    this._confirmDelButton.addEventListener("click", evt=>{
+      evt.preventDefault();
+      this._confirmElement.remove();
+    })
+    document.addEventListener("keydown", (evt) => {
+      evt.key === "Escape" ? this._confirmElement.remove() : "";
+    });
+    this._confirmElement.addEventListener("click", evt=>{
+      evt.target === evt.currentTarget ? this._confirmElement.remove() : "";
+    })
   }
+
+  _handleEscClose() {
+    document.addEventListener("keydown", (evt) => {
+      evt.key === "Escape" ? this._confirmElement.remove() : "";
+    });
+  }
+
+  close(){
+    console.log("closing function has been called")
+  }
+
 }

@@ -6,19 +6,21 @@ import {
   cardListSelector,
   popUpImgTemplate,
   popUpNewImgTemplate,
+  confirmationFormTemplate,
   contentSelector,
   newImgAddButton,
   cardPicSelector,
   currentUserJobSelector,
   currentUserNameSelector,
   authorInfoEditButton,
-  FormRenderer,
+  FormRenderer, userIdHabib
 } from "../utils/constants.js";
 import Section from "../Components/Section.js";
 import { PopupWithImage } from "../Components/PopupWithImage.js";
 import { PopUpWithForms } from "../Components/PopupWithForms.js";
+import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
 import { UserInfo } from "../Components/UserInfo.js";
-import { Api } from "../Components/Api.js";
+import { Api } from "../Components/Api.js"; 
 const initialCardInfo = new Api({
   baseUrl: "https://around-api.es.tripleten-services.com/v1",
   headers: {
@@ -38,51 +40,9 @@ const initialCardInfo = new Api({
     }
   });
 })();
-// initialCardInfo.deleteCard();
-// const FormRenderer = new Section({ data: [] }, contentSelector);
-initialCardInfo.getInitialCards().then((cardsData) => {
-  console.log(cardsData);
-  const popUpWithDefaultImage = new PopupWithImage({
-    popup: popUpImgTemplate,
-  });
-  const cardsSection = new Section(
-    {
-      data: cardsData,
-      renderer: (cardItem) => {
-        const card = new Card(cardItem);
-        const cardElement = card.generateCard(
-          cardItem.isLiked,
-          initialCardInfo._baseUrl,
-          initialCardInfo._headers.authorization,
-          cardsData
-        );
-        cardsSection.addItemDefault(cardElement);
-        cardElement
-          .querySelector(cardPicSelector)
-          .addEventListener("click", (evt) => {
-            evt.preventDefault();
-            popUpWithDefaultImage.open().close();
-            popUpWithDefaultImage.setImageData(evt);
-          });
-      },
-    },
-    cardListSelector
-  );
-  cardsSection.renderItems();
-
-  const newImgForm = new PopUpWithForms({ popup: popUpNewImgTemplate });
-  const newImgFormElement = newImgForm.generateForm(
-    initialCardInfo._baseUrl,
-    initialCardInfo._headers.authorization
-  );
-  newImgAddButton.forEach((item) => {
-    item.addEventListener("click", (evt) => {
-      evt.preventDefault();
-      FormRenderer.addItem(newImgFormElement);
-    });
-  });
-});
+initialCardInfo.getInitialCards();
 initialCardInfo.getInitialProfileInfo().then((userInfo) => {
+  console.log(userInfo)
   const nameElement = document.querySelector(currentUserNameSelector);
   const jobElement = document.querySelector(currentUserJobSelector);
   nameElement.textContent = userInfo.name;

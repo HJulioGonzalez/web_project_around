@@ -53,7 +53,7 @@
                 />
               </div>
             </div>
-          </template>
+          </template> 
         </div>
         <template class="edit-info__template">
           <div class="edit-info">
@@ -96,6 +96,24 @@
                 class="edit-info__container-button edit-info__submit form__submit"
               >
                 Save
+              </button>
+            </form>
+          </div>
+        </template>
+        <template class="popup-delete__template">
+          <div class="popup-delete">
+            <form class="popup-delete__container form" novalidate>
+              <button
+                type="button"
+                class="popup-delete__closebuttton"
+                name="popupDeleteCloseButton"
+              ></button>
+              <label class="popup-delete__title" for="confirmation"
+                >¿Estás seguro/a?</label>
+              <button
+                class="popup-delete__container-button popup-delete__submit form__submit" name="confirmationButton"
+              >
+                Si
               </button>
             </form>
           </div>

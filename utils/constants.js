@@ -10,7 +10,7 @@ export const initialCards = [
   },
   {
     name: "Melbourne",
-    link: "`https://image-tc.galaxy.tf/wijpeg-cvuab0pgtuyszmx6ytsrb8cpx/melbourne-train-station-1_standard.jpg?crop=106%2C0%2C1708%2C1281`",
+    link: "https://image-tc.galaxy.tf/wijpeg-cvuab0pgtuyszmx6ytsrb8cpx/melbourne-train-station-1_standard.jpg?crop=106%2C0%2C1708%2C1281",
   },
   {
     name: "Opera Sydney",
@@ -38,16 +38,20 @@ export const newImgFormCloseButtonSelector = ".new-picture-closebuttton";
 export const popUpSelector = ".prompted-image";
 export const popUpNewImgSelector = ".new-picture";
 export const popUpUserInfoSelector = ".edit-info";
+export const popUpConfirmationSelector = ".popup-delete";
 export const currentUserNameSelector = ".author__info-name";
 export const currentUserJobSelector = ".author__info-job";
 export const cardTemplate = ".venues__template";
 export const popUpImgTemplate = ".prompted-image__template";
 export const popUpImgLabelSelector = ".prompted-image__container-label";
 export const popUpNewImgTemplate = ".new-picture__template";
+export const newInfoFormTemplate = ".edit-info__template";
+export const confirmationFormTemplate = ".popup-delete__template";
 export const newImgAddButtonSelector = ".author__add-button";
 export const newImgNameSelector =
   ".new-picture__container-town-name form__input";
 export const newImgAddButton = document.querySelectorAll(".author__add-button");
+export const delImgConfirmationSelector = ".popup-delete__container-button";
 export const formInputSelector = ".form__input";
 export const authorInfoEditButton = document.querySelector(
   ".author__editbutton"
@@ -63,3 +67,4 @@ export const enableValidationElements = {
   errorClass: "form__input-error_active",
 };
 export const FormRenderer = new Section({ data: [] }, contentSelector);
+export const userIdHabib = "d0312e08-7264-4abf-aaac-0ec85ede7320";

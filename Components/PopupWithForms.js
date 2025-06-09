@@ -6,6 +6,7 @@ import {
   cardListSelector,
   popUpImgTemplate,
   cardPicSelector,
+  FormRenderer
 } from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
 import { PopupWithImage } from "../Components/PopupWithImage.js";
@@ -22,7 +23,6 @@ export class PopUpWithForms extends PopUp {
     const popUpElement = this._popup.content
       .querySelector(popUpNewImgSelector)
       .cloneNode(true);
-
     return popUpElement;
   }
 
@@ -46,6 +46,7 @@ export class PopUpWithForms extends PopUp {
       "click",
       (evt) => {
         evt.preventDefault();
+        console.log(this);
         this.close();
       }
     );
@@ -75,6 +76,8 @@ export class PopUpWithForms extends PopUp {
     this._element.firstElementChild.reset();
   }
 
+  renderingCards(){}
+
   getNewData() {
     this._newTownInfo = {};
     this._newTownInfo.name = this._newImgForm.elements.name.value;
@@ -82,6 +85,20 @@ export class PopUpWithForms extends PopUp {
   }
 
   creatingNewPost() {
+      const popUpWithDefaultImage = new PopupWithImage({
+          popup: popUpImgTemplate,
+        });
+        const newCardObj = new Card(this._newTownInfo);
+        const newCardElement = newCardObj.generateCard();
+        const newCardSection = new Section({ data: [] }, cardListSelector);
+        newCardSection.addItem(newCardElement);
+        newCardElement
+          .querySelector(cardPicSelector)
+          .addEventListener("click", (evt) => {
+            evt.preventDefault();
+            popUpWithDefaultImage.open().close();
+            popUpWithDefaultImage.setImageData(evt);
+          });
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
@@ -100,20 +117,7 @@ export class PopUpWithForms extends PopUp {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((newCard) => {
-        const popUpWithDefaultImage = new PopupWithImage({
-          popup: popUpImgTemplate,
-        });
-        const newCardObj = new Card(newCard);
-        const newCardElement = newCardObj.generateCard();
-        const newCardSection = new Section({ data: [] }, cardListSelector);
-        newCardSection.addItem(newCardElement);
-        newCardElement
-          .querySelector(cardPicSelector)
-          .addEventListener("click", (evt) => {
-            evt.preventDefault();
-            popUpWithDefaultImage.open().close();
-            popUpWithDefaultImage.setImageData(evt);
-          });
+        console.log(newCard, `The following object has been sucessfully added.`)
       })
       .catch((err) => {
         console.log(err);
