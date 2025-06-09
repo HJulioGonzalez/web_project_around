@@ -28,7 +28,6 @@ export class Card {
   generateCard(cardId, baseUrl, headersAuthorization, likeStatus) {
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(likeButtonSelector);
-    !likeStatus?"":this._likeButton.setAttribute("src", "./images/like_ACTIVE.png");
     this.likeButton(cardId, baseUrl, headersAuthorization, likeStatus);
     this.delPicForm(cardId, baseUrl, headersAuthorization);
     this._element.querySelector(cardPicSelector).src = this._townUrl;
@@ -36,22 +35,21 @@ export class Card {
     return this._element;
   }
 
+  likeRealTime(){
+    console.log("cambia el icono")
+  }
+
   likeButton(cardId, baseUrl, headersAuthorization, likeStatus) {
-    const likeButton = this._element.querySelector(likeButtonSelector);
-    // var likeClicks = 0;
-    likeButton.addEventListener("click", (evt) => {
+    this._likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
-      console.log(
-        "like button has been clicked", 
-      );
-      if (!likeStatus) {
-        console.log("you have liked the picture", likeStatus);
-        likeButton.setAttribute("src", "./images/like_ACTIVE.png");
-        return fetch(`${baseUrl}/cards/${cardId}/likes`, {
-            method: "PUT",
+      likeRealTime();
+      const method = !likeStatus? "PUT" : "DELETE";
+         fetch(`${baseUrl}/cards/${cardId}/likes`, {
+            method: method,
             headers: {
               authorization: headersAuthorization,
             },
+            
           })
             .then((res) => {
               if (res.ok) {
@@ -60,42 +58,22 @@ export class Card {
               return Promise.reject(`Error: ${res.status}`);
             })
             .then(data =>{
-              console.log(data)
+              likeStatus = !likeStatus;
+              console.log(data);
             })
             .catch((err) => {
               console.log(err);
-              return [];
             });
-      } else {
-        console.log("you have unliked the picture");
-        likeButton.setAttribute("src", "./images/like_BLACK.png");
-        return fetch(`${baseUrl}/cards/${cardId}/likes`, {
-            method: "DELETE",
-            headers: {
-              authorization: headersAuthorization,
-            },
-          })
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              }
-              return Promise.reject(`Error: ${res.status}`);
-            })
-            .then(data =>{
-              console.log(data)
-            })
-            .catch((err) => {
-              console.log(err);
-              return [];
-            });
-      }
-      
       // const number = likeClicks++;
       // number % 2 === 0
       //   ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
       //   : likeButton.setAttribute("src", "./images/like_BLACK.svg");
     });
+    function likeRealTime(params) {
+     console.log("change icon") 
+    }
   }
+
 
   delPicForm(cardId, baseUrl, headersAuthorization) {
     const deleteButton = this._element.querySelector(deleteButtonSelector);
