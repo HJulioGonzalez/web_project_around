@@ -1,4 +1,3 @@
-// import { Card } from "../Components/Card";
 export default class Section {
   constructor({ data, renderer }, containerSelector) {
     this._renderedItems = data;
@@ -14,5 +13,9 @@ export default class Section {
 
   addItem(element) {
     this._container.append(element);
+  }
+
+  addItemDefault(element) {
+    this._container.prepend(element);
   }
 }

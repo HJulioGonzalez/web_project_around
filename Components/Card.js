@@ -21,15 +21,22 @@ export class Card {
     return cardElement;
   }
 
-  _likeButton() {
+  likeButton(likeMode, baseUrl, headersAuthorization, cardsData) {
     const likeButton = this._element.querySelector(likeButtonSelector);
     var likeClicks = 0;
     likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
-      const number = likeClicks++;
-      number % 2 === 0
-        ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
-        : likeButton.setAttribute("src", "./images/like_BLACK.svg");
+      console.log(
+        "like button has been clicked",
+        likeMode,
+        baseUrl,
+        headersAuthorization,
+        cardsData
+      );
+      // const number = likeClicks++;
+      // number % 2 === 0
+      //   ? likeButton.setAttribute("src", "./images/like_ACTIVE.png")
+      //   : likeButton.setAttribute("src", "./images/like_BLACK.svg");
     });
   }
 
@@ -41,9 +48,9 @@ export class Card {
     });
   }
 
-  generateCard() {
+  generateCard(likeMode, baseUrl, headersAuthorization) {
     this._element = this._getTemplate();
-    this._likeButton();
+    this.likeButton(likeMode, baseUrl, headersAuthorization);
     this._deletePicture();
     this._element.querySelector(cardPicSelector).src = this._townUrl;
     this._element.querySelector(townNameSelector).textContent = this._townTitle;

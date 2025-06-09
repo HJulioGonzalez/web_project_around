@@ -1,9 +1,21 @@
-import { formInputSelector, popUpNewImgSelector } from "../utils/constants.js";
+import {
+  formInputSelector,
+  popUpNewImgSelector,
+  contentSelector,
+  newImgNameSelector,
+  cardListSelector,
+  popUpImgTemplate,
+  cardPicSelector,
+} from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
+import { PopupWithImage } from "../Components/PopupWithImage.js";
+import { Api } from "../Components/Api.js";
+import { Card } from "../Components/Card.js";
+import { FormValidator } from "./FormValidator.js";
+import Section from "../Components/Section.js";
 export class PopUpWithForms extends PopUp {
-  constructor({ popup, handleFormSubmit }) {
+  constructor({ popup }) {
     super({ popup });
-    this._handleFormSubmit = handleFormSubmit;
   }
 
   _getTemplate() {
@@ -14,16 +26,29 @@ export class PopUpWithForms extends PopUp {
     return popUpElement;
   }
 
+  generateForm(baseUrl, headersAuthorization) {
+    this._baseUrl = baseUrl;
+    this._headersAuthorization = headersAuthorization;
+    this._element = this._getTemplate();
+    this._newImgForm = this._element.firstElementChild;
+    this._setEventListener();
+    return this._element;
+  }
+
   _setEventListener() {
-    this._element.firstElementChild.addEventListener("submit", (evt) => {
+    this._newImgForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
+      this.getNewData();
+      this.creatingNewPost();
       this.close();
     });
-    this._element.lastElementChild.addEventListener("click", (evt) => {
-      evt.preventDefault();
-      this.close();
-    });
+    this._newImgForm.elements.newImgCloseButton.addEventListener(
+      "click",
+      (evt) => {
+        evt.preventDefault();
+        this.close();
+      }
+    );
     this._element.addEventListener("click", (evt) => {
       evt.target === evt.currentTarget ? this.close() : "";
     });
@@ -45,14 +70,54 @@ export class PopUpWithForms extends PopUp {
     });
   }
 
-  generateForm() {
-    this._element = this._getTemplate();
-    this._setEventListener();
-    return this._element;
-  }
-
   close() {
     this._element.remove();
     this._element.firstElementChild.reset();
+  }
+
+  getNewData() {
+    this._newTownInfo = {};
+    this._newTownInfo.name = this._newImgForm.elements.name.value;
+    this._newTownInfo.link = this._newImgForm.elements.link.value;
+  }
+
+  creatingNewPost() {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: this._headersAuthorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: this._newTownInfo.name,
+        link: this._newTownInfo.link,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((newCard) => {
+        const popUpWithDefaultImage = new PopupWithImage({
+          popup: popUpImgTemplate,
+        });
+        const newCardObj = new Card(newCard);
+        const newCardElement = newCardObj.generateCard();
+        const newCardSection = new Section({ data: [] }, cardListSelector);
+        newCardSection.addItem(newCardElement);
+        newCardElement
+          .querySelector(cardPicSelector)
+          .addEventListener("click", (evt) => {
+            evt.preventDefault();
+            popUpWithDefaultImage.open().close();
+            popUpWithDefaultImage.setImageData(evt);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
   }
 }

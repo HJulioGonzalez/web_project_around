@@ -28,10 +28,10 @@
           />
           <div class="author__info">
             <div class="author__info-title">
-              <p class="author__info-name">Habib Julio</p>
+              <p class="author__info-name"></p>
               <div class="author__editbutton"></div>
             </div>
-            <p class="author__info-job">Explorador</p>
+            <p class="author__info-job"></p>
             <div
               class="author__add-button author__add-button_resolution_725"
             ></div>
@@ -58,6 +58,11 @@
         <template class="edit-info__template">
           <div class="edit-info">
             <form class="edit-info__container form" novalidate>
+              <button
+                type="button"
+                class="edit-info__closebuttton"
+                name="editInfoCloseButton"
+              ></button>
               <label class="edit-info__title" for="name-input"
                 >Edit Profile</label
               >
@@ -68,8 +73,8 @@
                 minlength="2"
                 maxlength="40"
                 required
-                id="name-input"
-                autocomplete="name"
+                name="name"
+                autocomplete="on"
               />
               <span class="name-input-error form__input-error"
                 >Por favor, rellena este campo</span
@@ -81,8 +86,8 @@
                 minlength="2"
                 maxlength="200"
                 required
-                id="job-input"
-                autocomplete="title"
+                name="job"
+                autocomplete="on"
               />
               <span class="job-input-error form__input-error"
                 >Por favor, rellena este campo</span
@@ -93,22 +98,26 @@
                 Save
               </button>
             </form>
-            <div class="edit-info-closebuttton"></div>
           </div>
         </template>
         <template class="new-picture__template">
           <div class="new-picture">
             <form class="new-picture__container form" novalidate>
+              <button
+                class="new-picture__closebuttton"
+                name="newImgCloseButton"
+                type="button"
+              ></button>
               <label class="new-picture__title" for="name">Nuevo lugar</label>
               <input
                 type="text"
                 class="new-picture__container-town-name form__input"
-                id="name"
+                name="name"
                 minlength="2"
                 maxlength="30"
                 placeholder="Titulo"
                 required
-                autocomplete="off"
+                autocomplete="on"
               />
               <span class="town-name-input-error form__input-error"
                 >Por favor, rellena este campo</span
@@ -116,10 +125,10 @@
               <input
                 type="url"
                 class="new-picture__container-img-URL form__input"
-                id="link"
+                name="link"
                 placeholder="URL de la imagen"
                 required
-                autocomplete="off"
+                autocomplete="on"
               />
 
               <span class="url-input-error form__input-error"
@@ -129,7 +138,6 @@
                 Save
               </button>
             </form>
-            <div class="new-picture-closebuttton"></div>
           </div>
         </template>
         <template class="prompted-image__template">
@@ -178,6 +186,6 @@
         <p class="footer__copyright">&#169; 2024 Habib Julio</p>
       </footer>
     </div>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./pages/index.js"></script>
   </body>
 </html>
