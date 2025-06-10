@@ -6,7 +6,7 @@ import {
   cardListSelector,
   popUpImgTemplate,
   cardPicSelector,
-  FormRenderer
+  FormRenderer,
 } from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
 import { PopupWithImage } from "../Components/PopupWithImage.js";
@@ -26,27 +26,26 @@ export class PopUpWithForms extends PopUp {
     return popUpElement;
   }
 
-  generateForm(baseUrl, headersAuthorization) {
+  generateForm(baseUrl, headersAuthorization, allCards) {
     this._baseUrl = baseUrl;
     this._headersAuthorization = headersAuthorization;
     this._element = this._getTemplate();
     this._newImgForm = this._element.firstElementChild;
-    this._setEventListener();
+    this._setEventListener(allCards);
     return this._element;
   }
 
-  _setEventListener() {
+  _setEventListener(allCards) {
     this._newImgForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this.getNewData();
-      this.creatingNewPost();
+      this.creatingNewPost(allCards);
       this.close();
     });
     this._newImgForm.elements.newImgCloseButton.addEventListener(
       "click",
       (evt) => {
         evt.preventDefault();
-        console.log(this);
         this.close();
       }
     );
@@ -76,7 +75,7 @@ export class PopUpWithForms extends PopUp {
     this._element.firstElementChild.reset();
   }
 
-  renderingCards(){}
+  renderingCards() {}
 
   getNewData() {
     this._newTownInfo = {};
@@ -84,23 +83,24 @@ export class PopUpWithForms extends PopUp {
     this._newTownInfo.link = this._newImgForm.elements.link.value;
   }
 
-  creatingNewPost() {
-      const popUpWithDefaultImage = new PopupWithImage({
-          popup: popUpImgTemplate,
-        });
-        const newCardObj = new Card(this._newTownInfo);
-        const newCardElement = newCardObj.generateCard();
-        const newCardSection = new Section({ data: [] }, cardListSelector);
-        newCardSection.addItem(newCardElement);
-        newCardElement
-          .querySelector(cardPicSelector)
-          .addEventListener("click", (evt) => {
-            evt.preventDefault();
-            popUpWithDefaultImage.open().close();
-            popUpWithDefaultImage.setImageData(evt);
-          });
-    return fetch(`${this._baseUrl}/cards`, {
+  creatingNewPost(allCards) {
+    const popUpWithDefaultImage = new PopupWithImage({
+      popup: popUpImgTemplate,
+    });
+    const newCardObj = new Card(this._newTownInfo);
+    const newCardElement = newCardObj.generateCard();
+    const newCardSection = new Section({ data: [] }, cardListSelector);
+    newCardSection.addItem(newCardElement);
+    newCardElement
+      .querySelector(cardPicSelector)
+      .addEventListener("click", (evt) => {
+        evt.preventDefault();
+        popUpWithDefaultImage.open().close();
+        popUpWithDefaultImage.setImageData(evt);
+      });
+    fetch(`${this._baseUrl}/cards`, {
       method: "POST",
+
       headers: {
         authorization: this._headersAuthorization,
         "Content-Type": "application/json",
@@ -116,11 +116,11 @@ export class PopUpWithForms extends PopUp {
         }
         return Promise.reject(`Error: ${res.status}`);
       })
-      .then((newCard) => {
-        console.log(newCard, `The following object has been sucessfully added.`)
+      .then((data) => {
+        console.log(data, allCards);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(`Error: ${err} - ${err.status}`);
         return [];
       });
   }

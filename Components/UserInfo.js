@@ -4,7 +4,7 @@ import {
   currentUserNameSelector,
   currentUserJobSelector,
   FormRenderer,
-  newInfoFormTemplate
+  newInfoFormTemplate,
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 export class UserInfo {
@@ -63,6 +63,10 @@ export class UserInfo {
   }
 
   setNewProfile() {
+    const nameElement = document.querySelector(currentUserNameSelector);
+    const jobElement = document.querySelector(currentUserJobSelector);
+    nameElement.textContent = this._newProfileInfo.name;
+    jobElement.textContent = this._newProfileInfo.about;
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
@@ -80,15 +84,8 @@ export class UserInfo {
         }
         return Promise.reject(`Error: ${res.status}`);
       })
-      .then((newUserInfo) => {
-        const nameElement = document.querySelector(currentUserNameSelector);
-        const jobElement = document.querySelector(currentUserJobSelector);
-        nameElement.textContent = newUserInfo.name;
-        jobElement.textContent = newUserInfo.about;
-        console.log("se ejecutó el cambio en el DOM");
-      })
       .catch((err) => {
-        console.log(err);
+        console.log(`Error: ${err} - ${err.status}`);
         return [];
       });
   }
