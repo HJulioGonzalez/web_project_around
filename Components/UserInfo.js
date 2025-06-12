@@ -9,6 +9,7 @@ import {
   authorPicSelector,
   authorSectionSelector,
   editPicFormTemplate,
+  editPicContainerSelector
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 import { EditUserImg } from "./EditUserImg.js";
@@ -41,19 +42,19 @@ export class UserInfo {
       evt.preventDefault();
       this._inputList = this._element.querySelectorAll(formInputSelector);
       this.getNewProfileInfo();
-      this.close();
+      this.close(this._element);
     });
     this._newInfoForm.elements.editInfoCloseButton.addEventListener(
       "click",
       (evt) => {
         evt.preventDefault();
-        this.close();
+        this.close(this._element);
       }
     );
     this._element.addEventListener("click", (evt) => {
-      evt.target === evt.currentTarget ? this.close() : "";
+      evt.target === evt.currentTarget ? this.close(this._element) : "";
     });
-    this._handleEscClose();
+    this._handleEscClose(this._element);
   }
 
   _getInputValues() {
@@ -115,6 +116,12 @@ export class UserInfo {
         evt.preventDefault();
         this._editPicSection = new EditUserImg({ popup: editPicFormTemplate });
         this._editPicElement = this._editPicSection.generateForm();
+        FormRenderer.addItem(this._editPicElement);
+        this._editPicForm = this._editPicElement.querySelector(editPicContainerSelector);
+        this._editPicFormCloseButton = this._editPicForm.elements.editPicCloseButton;
+        this._editPicFormCloseButton.addEventListener("click", evt=>{
+          console.log("close button has been clicked")
+        })
       });
 
       this._editIcon.addEventListener("mouseleave", () => {
@@ -123,14 +130,15 @@ export class UserInfo {
     });
   }
 
-  _handleEscClose() {
+  _handleEscClose(element) {
     document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? this._element.remove() : "";
+      evt.key === "Escape" ? element.remove() : "";
     });
   }
 
-  close() {
-    this._element.remove();
-    this._element.firstElementChild.reset();
+  close(element) {
+    console.log("close with parameters")
+    element.remove();
+    element.firstElementChild.reset();
   }
 }

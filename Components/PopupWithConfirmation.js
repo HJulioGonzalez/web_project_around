@@ -15,7 +15,6 @@ export class PopupWithConfirmation extends PopUp {
     const popUpConfirmationElement = this._popup.content
       .querySelector(popUpConfirmationSelector)
       .cloneNode(true);
-
     return popUpConfirmationElement;
   }
 

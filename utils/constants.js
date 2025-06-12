@@ -40,6 +40,8 @@ export const popUpSelector = ".prompted-image";
 export const popUpNewImgSelector = ".new-picture";
 export const popUpUserInfoSelector = ".edit-info";
 export const editInfoContainerSelector = ".edit-info__container";
+export const editPicContainerSelector =".edit-pic__container";
+export const editPicFormCloseButtonSelector = ".edit-pic__closebuttton"
 export const popUpConfirmationSelector = ".popup-delete";
 export const editPicSelector = ".edit-pic";
 export const authorPicSelector = ".author__picture";
@@ -51,7 +53,7 @@ export const popUpImgLabelSelector = ".prompted-image__container-label";
 export const popUpNewImgTemplate = ".new-picture__template";
 export const newInfoFormTemplate = ".edit-info__template";
 export const confirmationFormTemplate = ".popup-delete__template";
-export const editPicFormTemplate = "edit-pic__template";
+export const editPicFormTemplate = ".edit-pic__template";
 export const newImgAddButtonSelector = ".author__add-button";
 export const newImgNameSelector =
   ".new-picture__container-town-name form__input";
