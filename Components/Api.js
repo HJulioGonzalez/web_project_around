@@ -68,6 +68,7 @@ export class Api {
         newImgAddButton.forEach((item) => {
           item.addEventListener("click", (evt) => {
             evt.preventDefault();
+            newImgForm.formOpened();
             FormRenderer.addItem(newImgFormElement);
           });
         });
@@ -92,7 +93,6 @@ export class Api {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((userInfo) => {
-        console.log(userInfo.avatar);
         const nameElement = document.querySelector(currentUserNameSelector);
         const jobElement = document.querySelector(currentUserJobSelector);
         const picElement = document.querySelector(authorPicSelector);

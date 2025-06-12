@@ -26,20 +26,20 @@ export class PopUpWithForms extends PopUp {
     return popUpElement;
   }
 
-  generateForm(baseUrl, headersAuthorization, allCards) {
+  generateForm(baseUrl, headersAuthorization) {
     this._baseUrl = baseUrl;
     this._headersAuthorization = headersAuthorization;
     this._element = this._getTemplate();
     this._newImgForm = this._element.firstElementChild;
-    this._setEventListener(allCards);
+    this._setEventListener();
     return this._element;
   }
 
-  _setEventListener(allCards) {
+  _setEventListener() {
     this._newImgForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this.getNewData();
-      this.creatingNewPost(allCards);
+      this.creatingNewPost();
       this.close();
     });
     this._newImgForm.elements.newImgCloseButton.addEventListener(
@@ -52,7 +52,6 @@ export class PopUpWithForms extends PopUp {
     this._element.addEventListener("click", (evt) => {
       evt.target === evt.currentTarget ? this.close() : "";
     });
-    this._handleEscClose();
   }
 
   _getInputValues() {
@@ -64,10 +63,19 @@ export class PopUpWithForms extends PopUp {
     return this._formValues;
   }
 
-  _handleEscClose() {
-    document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? this._element.remove() : "";
-    });
+  _handleEscClose(element) {
+    document.addEventListener(
+      "keydown",
+      (evt) => {
+        console.log("popupwithform esc closing method has been called");
+        evt.key === "Escape" ? element.remove() : "";
+      },
+      { once: true }
+    );
+  }
+
+  formOpened() {
+    this._handleEscClose(this._element);
   }
 
   close() {
@@ -75,15 +83,13 @@ export class PopUpWithForms extends PopUp {
     this._element.firstElementChild.reset();
   }
 
-  renderingCards() {}
-
   getNewData() {
     this._newTownInfo = {};
     this._newTownInfo.name = this._newImgForm.elements.name.value;
     this._newTownInfo.link = this._newImgForm.elements.link.value;
   }
 
-  creatingNewPost(allCards) {
+  creatingNewPost() {
     const popUpWithDefaultImage = new PopupWithImage({
       popup: popUpImgTemplate,
     });

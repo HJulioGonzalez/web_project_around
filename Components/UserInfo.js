@@ -9,7 +9,7 @@ import {
   authorPicSelector,
   authorSectionSelector,
   editPicFormTemplate,
-  editPicContainerSelector
+  editPicContainerSelector,
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 import { EditUserImg } from "./EditUserImg.js";
@@ -32,8 +32,8 @@ export class UserInfo {
     this._headersAuthorization = headersAuthorization;
     this._element = this._getTemplate();
     this._newInfoForm = this._element.querySelector(editInfoContainerSelector);
+    this._userImg = document.querySelector(authorPicSelector);
     this._setEventListener();
-    this.setNewUserPic();
     return this._element;
   }
 
@@ -52,9 +52,11 @@ export class UserInfo {
       }
     );
     this._element.addEventListener("click", (evt) => {
-      evt.target === evt.currentTarget ? this.close(this._element) : "";
+      evt.target === evt.currentTarget ? this.close(this._element) : null;
     });
-    this._handleEscClose(this._element);
+    this._userImg.addEventListener("mouseover", () => {
+      this.setNewUserPic();
+    });
   }
 
   _getInputValues() {
@@ -98,48 +100,65 @@ export class UserInfo {
   }
 
   setNewUserPic() {
-    console.log("setting new image method has been called");
-    this._userImg = document.querySelector(authorPicSelector);
+    this._renderingEditIcon();
+    this._editIcon.addEventListener("mouseleave", () => {
+      this._editIcon.remove();
+    });
     this._setEventListenerNewPic();
   }
 
+  editPicForm() {
+    this._editPicSection = new EditUserImg({ popup: editPicFormTemplate });
+    this._editPicElement = this._editPicSection.generateForm();
+    FormRenderer.addItem(this._editPicElement);
+    this._editPicForm = this._editPicElement.querySelector(
+      editPicContainerSelector
+    );
+    this._editPicFormCloseButton =
+      this._editPicForm.elements.editPicCloseButton;
+  }
+
   _setEventListenerNewPic() {
-    this._userImg.addEventListener("mouseover", () => {
-      console.log("you are passing over the user profile picture");
-      this._editIcon = document.createElement("div");
-      this._editIcon.classList.add("author__picture-edit-icon");
-      const authorSectionElement = document.querySelector(
-        authorSectionSelector
-      );
-      authorSectionElement.append(this._editIcon);
-      this._editIcon.addEventListener("click", (evt) => {
-        evt.preventDefault();
-        this._editPicSection = new EditUserImg({ popup: editPicFormTemplate });
-        this._editPicElement = this._editPicSection.generateForm();
-        FormRenderer.addItem(this._editPicElement);
-        this._editPicForm = this._editPicElement.querySelector(editPicContainerSelector);
-        this._editPicFormCloseButton = this._editPicForm.elements.editPicCloseButton;
-        this._editPicFormCloseButton.addEventListener("click", evt=>{
-          this.close(this._editPicElement);
-          
-        })
-      });
+    this._editIcon.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      this.editPicForm();
       this._handleEscClose(this._editPicElement);
-      this._editIcon.addEventListener("mouseleave", () => {
-        this._editIcon.remove();
+      this._editPicForm.addEventListener("submit", (evt) => {
+        evt.preventDefault();
+      });
+      this._editPicFormCloseButton.addEventListener("click", (evt) => {
+        this.close(this._editPicElement);
+      });
+      this._editPicElement.addEventListener("click", (evt) => {
+        evt.target === evt.currentTarget
+          ? this.close(this._editPicElement)
+          : null;
       });
     });
+  }
+
+  formOpened() {
+    this._handleEscClose(this._element);
+  }
+
+  _renderingEditIcon() {
+    this._editIcon = document.createElement("div");
+    this._editIcon.classList.add("author__picture-edit-icon");
+    const authorSectionElement = document.querySelector(authorSectionSelector);
+    authorSectionElement.append(this._editIcon);
   }
 
   _handleEscClose(element) {
-    console.log("habib")
-    document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? element.remove() : "";
-    });
+    document.addEventListener(
+      "keydown",
+      (evt) => {
+        evt.key === "Escape" ? element.remove() : "";
+      },
+      { once: true }
+    );
   }
 
   close(element) {
-    console.log("close with parameters")
     element.remove();
     element.firstElementChild.reset();
   }

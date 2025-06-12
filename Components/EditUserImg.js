@@ -9,7 +9,6 @@ export class EditUserImg {
   generateForm() {
     this._element = this._getTemplate();
     return this._element;
-    
   }
 
   _getTemplate() {

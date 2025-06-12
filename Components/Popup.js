@@ -11,22 +11,26 @@ export class PopUp {
     return popUpElement;
   }
 
-  _handleEscClose() {
-    document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? this._element.remove() : "";
-    });
+  _handleEscClose(element) {
+    document.addEventListener(
+      "keydown",
+      (evt) => {
+        evt.key === "Escape" ? element.remove() : "";
+      },
+      { once: true }
+    );
   }
 
   open() {
     this._element = this._popUpTemplate();
     this._popUpContainer = this._popup.parentElement;
     this._popUpContainer.append(this._element);
+    this._handleEscClose(this._element);
     return this;
   }
 
   close() {
     this.setEventListeners();
-    this._handleEscClose();
     return this;
   }
 

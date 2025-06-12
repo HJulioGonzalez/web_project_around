@@ -154,6 +154,7 @@ export class Card {
       this._confirmSection = new PopupWithConfirmation({
         popup: confirmationFormTemplate,
       });
+      9;
       this._confirmElement = this._confirmSection.generateForm();
       FormRenderer.addItem(this._confirmElement);
       this._setEventListeners(evt.target);
@@ -211,21 +212,18 @@ export class Card {
       evt.preventDefault();
       this._confirmElement.remove();
     });
-    document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? this._confirmElement.remove() : "";
-    });
+    // document.addEventListener("keydown", (evt) => {
+    //   evt.key === "Escape" ? this._confirmElement.remove() : "";
+    // });
     this._confirmElement.addEventListener("click", (evt) => {
       evt.target === evt.currentTarget ? this._confirmElement.remove() : "";
     });
   }
 
-  _handleEscClose() {
-    document.addEventListener("keydown", (evt) => {
-      evt.key === "Escape" ? this._confirmElement.remove() : "";
-    });
-  }
-
-  close() {
-    console.log("closing function has been called");
-  }
+  // _handleEscClose() {
+  //   document.addEventListener("keydown", (evt) => {
+  //     console.log("new card esc closing method has been called");
+  //     evt.key === "Escape" ? this._confirmElement.remove() : "";
+  //   });
+  // }
 }
