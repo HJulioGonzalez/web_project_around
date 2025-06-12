@@ -120,10 +120,11 @@ export class UserInfo {
         this._editPicForm = this._editPicElement.querySelector(editPicContainerSelector);
         this._editPicFormCloseButton = this._editPicForm.elements.editPicCloseButton;
         this._editPicFormCloseButton.addEventListener("click", evt=>{
-          console.log("close button has been clicked")
+          this.close(this._editPicElement);
+          
         })
       });
-
+      this._handleEscClose(this._editPicElement);
       this._editIcon.addEventListener("mouseleave", () => {
         this._editIcon.remove();
       });
@@ -131,6 +132,7 @@ export class UserInfo {
   }
 
   _handleEscClose(element) {
+    console.log("habib")
     document.addEventListener("keydown", (evt) => {
       evt.key === "Escape" ? element.remove() : "";
     });
