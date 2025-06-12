@@ -8,10 +8,13 @@ import {
   popUpNewImgTemplate,
   newImgAddButton,
   FormRenderer,
+  authorInfoEditButton,
+  authorPicSelector,
 } from "../utils/constants.js";
 import { Card } from "../Components/Card.js";
 import { PopupWithImage } from "../Components/PopupWithImage.js";
 import { PopUpWithForms } from "../Components/PopupWithForms.js";
+import { UserInfo } from "../Components/UserInfo.js";
 export class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -42,13 +45,8 @@ export class Api {
             data: cardsData,
             renderer: (cardItem) => {
               const card = new Card(cardItem);
-              const cardElement = card.generateCard(
-                cardItem._id,
-                this._baseUrl,
-                this._headers.authorization,
-                cardItem.isLiked
-              );
-              cardsSection.addItemDefault(cardElement);
+              const cardElement = card.generateCard();
+              cardsSection.addItem(cardElement);
               cardElement
                 .querySelector(cardPicSelector)
                 .addEventListener("click", (evt) => {
@@ -92,6 +90,27 @@ export class Api {
           return res.json();
         }
         return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((userInfo) => {
+        console.log(userInfo.avatar);
+        const nameElement = document.querySelector(currentUserNameSelector);
+        const jobElement = document.querySelector(currentUserJobSelector);
+        const picElement = document.querySelector(authorPicSelector);
+        nameElement.textContent = userInfo.name;
+        jobElement.textContent = userInfo.about;
+        picElement.setAttribute("src", userInfo.avatar);
+        const currentUser = new UserInfo(
+          currentUserNameSelector,
+          currentUserJobSelector
+        );
+        const userNewInfoForm = currentUser.generateForm(
+          this._baseUrl,
+          this._headers.authorization
+        );
+        authorInfoEditButton.addEventListener("click", (evt) => {
+          evt.preventDefault();
+          FormRenderer.addItem(userNewInfoForm);
+        });
       })
       .catch((err) => {
         console.log(`Error: ${err} - ${err.status}`);

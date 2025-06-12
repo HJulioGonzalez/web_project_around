@@ -8,8 +8,19 @@
 .author__picture {
   width: 120px;
   height: 120px;
+  object-fit: cover;
   border-radius: 60px;
   margin: 0 30px 0 0;
+}
+
+.author__picture-edit-icon {
+  width: 120px;
+  height: 120px;
+  background: url(../images/editPic.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
 }
 
 .author__info-title {

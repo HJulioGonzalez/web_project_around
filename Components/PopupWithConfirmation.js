@@ -1,30 +1,27 @@
-import {
-  popUpConfirmationSelector
-} from "../utils/constants.js";
+import { popUpConfirmationSelector } from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
 
 export class PopupWithConfirmation extends PopUp {
-    constructor({popup}){
-        super({popup});
-    }
+  constructor({ popup }) {
+    super({ popup });
+  }
 
-_getTemplate() {
+  generateForm() {
+    this._element = this._getTemplate();
+    return this._element;
+  }
+
+  _getTemplate() {
     const popUpConfirmationElement = this._popup.content
       .querySelector(popUpConfirmationSelector)
       .cloneNode(true);
-    
 
     return popUpConfirmationElement;
   }
 
-generateForm(){
-    this._element = this._getTemplate();
-    return this._element
-}
+  _setEventListener() {}
 
-_setEventListener(){}
-
-_handleEscClose() {
+  _handleEscClose() {
     document.addEventListener("keydown", (evt) => {
       evt.key === "Escape" ? this._element.remove() : "";
     });

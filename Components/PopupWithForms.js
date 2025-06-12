@@ -90,7 +90,7 @@ export class PopUpWithForms extends PopUp {
     const newCardObj = new Card(this._newTownInfo);
     const newCardElement = newCardObj.generateCard();
     const newCardSection = new Section({ data: [] }, cardListSelector);
-    newCardSection.addItem(newCardElement);
+    newCardSection.addItemDefault(newCardElement);
     newCardElement
       .querySelector(cardPicSelector)
       .addEventListener("click", (evt) => {
@@ -115,9 +115,6 @@ export class PopUpWithForms extends PopUp {
           return res.json();
         }
         return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((data) => {
-        console.log(data, allCards);
       })
       .catch((err) => {
         console.log(`Error: ${err} - ${err.status}`);

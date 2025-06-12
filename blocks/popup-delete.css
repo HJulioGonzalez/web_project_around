@@ -14,7 +14,7 @@
   flex-direction: column-reverse;
   box-sizing: border-box;
   padding: 0;
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 .popup-delete-closebuttton:hover {

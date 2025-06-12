@@ -17,6 +17,19 @@ export class Card {
   constructor(data) {
     this._townTitle = data.name;
     this._townUrl = data.link;
+    this._isLiked = data.isLiked;
+  }
+
+  updateApi() {
+    const updatedCardsInfo = new Api({
+      baseUrl: "https://around-api.es.tripleten-services.com/v1",
+      headers: {
+        authorization: "d0312e08-7264-4abf-aaac-0ec85ede7320",
+        "Content-Type": "application/json",
+      },
+    });
+    this._baseUrl = updatedCardsInfo._baseUrl;
+    this._authorization = updatedCardsInfo._headers.authorization;
   }
 
   _getTemplate() {
@@ -28,98 +41,37 @@ export class Card {
     return cardElement;
   }
 
-  generateCard(cardId, baseUrl, headersAuthorization, likeStatus) {
+  generateCard() {
+    this._updatedCardsInfo = new Api({
+      baseUrl: "https://around-api.es.tripleten-services.com/v1",
+      headers: {
+        authorization: "d0312e08-7264-4abf-aaac-0ec85ede7320",
+        "Content-Type": "application/json",
+      },
+    });
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(likeButtonSelector);
-    likeStatus
-      ? this._likeButton.setAttribute("src", likeStatusActiveSelector)
-      : this._likeButton.setAttribute("src", likeStatusInactiveSelector);
-    this.likeButton(cardId, baseUrl, headersAuthorization, likeStatus);
-    this.delPicForm(cardId, baseUrl, headersAuthorization);
+    this._deleteButton = this._element.querySelector(deleteButtonSelector);
+    this.likeButton();
+    this.delPicForm();
     this._element.querySelector(cardPicSelector).src = this._townUrl;
     this._element.querySelector(townNameSelector).textContent = this._townTitle;
+    this._isLiked
+      ? (this._element.querySelector(likeButtonSelector).src =
+          likeStatusActiveSelector)
+      : (this._element.querySelector(likeButtonSelector).src =
+          likeStatusInactiveSelector);
     return this._element;
   }
 
-  likeRealTime() {
-    console.log("cambia el icono");
-  }
-
-  likeButton(cardId, baseUrl, headersAuthorization, likeStatus) {
+  likeButton() {
     this._likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
-      this.likeRealTime(likeStatus);
-      const method = !likeStatus ? "PUT" : "DELETE";
-      fetch(`${baseUrl}/cards/${cardId}/likes`, {
-        method: method,
-        cache: "no-store",
-        headers: {
-          authorization: headersAuthorization,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Error: ${res.status}`);
-        })
-        .then((data) => {
-          likeStatus = !likeStatus;
-          console.log(data);
-        })
-        .catch((err) => {
-          console.log(`Error: ${err} - ${err.status}`);
-        });
-    });
-  }
-
-  likeRealTime(likeStatus) {
-    if (!likeStatus) {
-      this._likeButton.setAttribute("src", likeStatusActiveSelector);
-      likeStatus = !likeStatus;
-    } else {
-      this._likeButton.setAttribute("src", likeStatusInactiveSelector);
-      likeStatus = !likeStatus;
-    }
-  }
-
-  delPicForm(cardId, baseUrl, headersAuthorization) {
-    const deleteButton = this._element.querySelector(deleteButtonSelector);
-    this._confirmSection = new PopupWithConfirmation({
-      popup: confirmationFormTemplate,
-    });
-    deleteButton.addEventListener("click", (evt) => {
-      evt.preventDefault();
-      console.log("delete button has been clicked");
-      this._confirmElement = this._confirmSection.generateForm();
-      FormRenderer.addItem(this._confirmElement);
-      this._setEventListeners(cardId, baseUrl, headersAuthorization);
-    });
-  }
-
-  _setEventListeners(cardId, baseUrl, headersAuthorization) {
-    this._confirmForm = this._confirmElement.firstElementChild;
-    this._confirmButton = this._confirmForm.elements.confirmationButton;
-    this._confirmDelButton = this._confirmForm.elements.popupDeleteCloseButton;
-    this._confirmForm.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      this._confirmElement.remove();
-      this._element.remove();
-      const updatedCardsInfo = new Api({
-        baseUrl: "https://around-api.es.tripleten-services.com/v1",
-        headers: {
-          authorization: "d0312e08-7264-4abf-aaac-0ec85ede7320",
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(
-        updatedCardsInfo._baseUrl,
-        updatedCardsInfo._headers.authorization
-      );
-      return fetch(`${updatedCardsInfo._baseUrl}/cards`, {
+      this.likeRealTime(evt);
+      fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
         method: "GET",
         headers: {
-          authorization: updatedCardsInfo._headers.authorization,
+          authorization: this._updatedCardsInfo._headers.authorization,
         },
       })
         .then((res) => {
@@ -129,13 +81,39 @@ export class Card {
           return Promise.reject(`Error: ${res.status}`);
         })
         .then((updatedData) => {
-          console.log(updatedData);
+          const cardItem = evt.target.closest(allCardsListSelector);
+          const cardItemName =
+            cardItem.querySelector(townNameSelector).textContent;
+          const newCardItemApi = updatedData.find(
+            (item) => item.name === cardItemName
+          );
+          return newCardItemApi;
+        })
+        .then((data) => {
+          const method = !data.isLiked ? "PUT" : "DELETE";
+          fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data._id}/likes`, {
+            method: method,
+            headers: {
+              authorization: this._updatedCardsInfo._headers.authorization,
+            },
+          })
+            .then((res) => {
+              if (res.ok) {
+                return res.json();
+              }
+              return Promise.reject(`Error: ${res.status}`);
+            })
+            .then((newState) => {
+              // evt.target.setAttribute("src", likeStatusActiveSelector);
+            });
         })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
         });
-      // fetch(`${baseUrl}/cards/${cardId}`, {
-      //   method: "DELETE",
+      // this.likeRealTime(likeStatus);
+      // const method = !likeStatus ? "PUT" : "DELETE";
+      // fetch(`${baseUrl}/cards/${cardId}/likes`, {
+      //   method: method,
       //   cache: "no-store",
       //   headers: {
       //     authorization: headersAuthorization,
@@ -148,11 +126,86 @@ export class Card {
       //     return Promise.reject(`Error: ${res.status}`);
       //   })
       //   .then((data) => {
+      //     likeStatus = !likeStatus;
       //     console.log(data);
       //   })
       //   .catch((err) => {
-      //     console.log(`${err} - ${err.status}`);
+      //     console.log(`Error: ${err} - ${err.status}`);
       //   });
+    });
+  }
+
+  likeRealTime(evt) {
+    if (this._isLiked) {
+      this._isLiked = !this._isLiked;
+      evt.target.setAttribute("src", likeStatusInactiveSelector);
+      // likeStatus = !likeStatus;
+    } else {
+      this._isLiked = !this._isLiked;
+      evt.target.setAttribute("src", likeStatusActiveSelector);
+      // this._likeButton.setAttribute("src", likeStatusInactiveSelector);
+      // likeStatus = !likeStatus;
+    }
+  }
+
+  delPicForm() {
+    this._deleteButton.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      this._confirmSection = new PopupWithConfirmation({
+        popup: confirmationFormTemplate,
+      });
+      this._confirmElement = this._confirmSection.generateForm();
+      FormRenderer.addItem(this._confirmElement);
+      this._setEventListeners(evt.target);
+    });
+  }
+
+  _setEventListeners(delButton) {
+    this._confirmForm = this._confirmElement.firstElementChild;
+    this._confirmButton = this._confirmForm.elements.confirmationButton;
+    this._confirmDelButton = this._confirmForm.elements.popupDeleteCloseButton;
+    this._confirmForm.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      this._confirmElement.remove();
+      this._element.remove();
+      fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
+        method: "GET",
+        headers: {
+          authorization: this._updatedCardsInfo._headers.authorization,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Error: ${res.status}`);
+        })
+        .then((updatedData) => {
+          const cardItem = delButton.closest(allCardsListSelector);
+          const cardItemName =
+            cardItem.querySelector(townNameSelector).textContent;
+          const newCardItemApi = updatedData.find(
+            (item) => item.name === cardItemName
+          );
+          return newCardItemApi._id;
+        })
+        .then((data) => {
+          fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data}`, {
+            method: "DELETE",
+            cache: "no-store",
+            headers: {
+              authorization: this._updatedCardsInfo._headers.authorization,
+            },
+          }).then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            return Promise.reject(`Error: ${res.status}`);
+          });
+        })
+        .catch((err) => {
+          console.log(`Error: ${err} - ${err.status}`);
+        });
     });
     this._confirmDelButton.addEventListener("click", (evt) => {
       evt.preventDefault();

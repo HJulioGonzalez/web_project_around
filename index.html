@@ -21,11 +21,7 @@
       </header>
       <main class="content">
         <div class="author">
-          <img
-            src="./images/FOTO_ID.jpg"
-            alt="AuthorPicture"
-            class="author__picture"
-          />
+          <img src="" alt="AuthorPicture" class="author__picture" />
           <div class="author__info">
             <div class="author__info-title">
               <p class="author__info-name"></p>
@@ -53,7 +49,7 @@
                 />
               </div>
             </div>
-          </template> 
+          </template>
         </div>
         <template class="edit-info__template">
           <div class="edit-info">
@@ -100,6 +96,38 @@
             </form>
           </div>
         </template>
+        <template class="edit-pic__template">
+          <div class="edit-pic">
+            <form class="edit-pic__container form" novalidate>
+              <button
+                type="button"
+                class="edit-pic__closebuttton"
+                name="editPicCloseButton"
+              ></button>
+              <label class="edit-pic__title" for="name-input"
+                >Cambiar foto de perfil</label
+              >
+              <input
+                type="url"
+                class="edit-pic__container-img-URL form__input"
+                placeholder="New img URL"
+                minlength="2"
+                maxlength="40"
+                required
+                name="newImgUrl"
+                autocomplete="on"
+              />
+              <span class="name-input-error form__input-error"
+                >Por favor, rellena este campo</span
+              >
+              <button
+                class="edit-pic__container-button edit-pic__submit form__submit"
+              >
+                Save
+              </button>
+            </form>
+          </div>
+        </template>
         <template class="popup-delete__template">
           <div class="popup-delete">
             <form class="popup-delete__container form" novalidate>
@@ -109,9 +137,11 @@
                 name="popupDeleteCloseButton"
               ></button>
               <label class="popup-delete__title" for="confirmation"
-                >¿Estás seguro/a?</label>
+                >¿Estás seguro/a?</label
+              >
               <button
-                class="popup-delete__container-button popup-delete__submit form__submit" name="confirmationButton"
+                class="popup-delete__container-button popup-delete__submit form__submit"
+                name="confirmationButton"
               >
                 Si
               </button>

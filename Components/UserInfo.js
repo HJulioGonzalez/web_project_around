@@ -5,8 +5,13 @@ import {
   currentUserJobSelector,
   FormRenderer,
   newInfoFormTemplate,
+  editInfoContainerSelector,
+  authorPicSelector,
+  authorSectionSelector,
+  editPicFormTemplate,
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
+import { EditUserImg } from "./EditUserImg.js";
 export class UserInfo {
   constructor(userName, userJob) {
     this._userName = userName;
@@ -25,8 +30,9 @@ export class UserInfo {
     this._baseUrl = baseUrl;
     this._headersAuthorization = headersAuthorization;
     this._element = this._getTemplate();
-    this._newInfoForm = this._element.firstElementChild;
+    this._newInfoForm = this._element.querySelector(editInfoContainerSelector);
     this._setEventListener();
+    this.setNewUserPic();
     return this._element;
   }
 
@@ -88,6 +94,33 @@ export class UserInfo {
         console.log(`Error: ${err} - ${err.status}`);
         return [];
       });
+  }
+
+  setNewUserPic() {
+    console.log("setting new image method has been called");
+    this._userImg = document.querySelector(authorPicSelector);
+    this._setEventListenerNewPic();
+  }
+
+  _setEventListenerNewPic() {
+    this._userImg.addEventListener("mouseover", () => {
+      console.log("you are passing over the user profile picture");
+      this._editIcon = document.createElement("div");
+      this._editIcon.classList.add("author__picture-edit-icon");
+      const authorSectionElement = document.querySelector(
+        authorSectionSelector
+      );
+      authorSectionElement.append(this._editIcon);
+      this._editIcon.addEventListener("click", (evt) => {
+        evt.preventDefault();
+        this._editPicSection = new EditUserImg({ popup: editPicFormTemplate });
+        this._editPicElement = this._editPicSection.generateForm();
+      });
+
+      this._editIcon.addEventListener("mouseleave", () => {
+        this._editIcon.remove();
+      });
+    });
   }
 
   _handleEscClose() {
