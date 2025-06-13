@@ -10,6 +10,8 @@ import {
   authorSectionSelector,
   editPicFormTemplate,
   editPicContainerSelector,
+  editInfoSaveButtonSelector,
+  editPicSaveButtonSelector,
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 import { EditUserImg } from "./EditUserImg.js";
@@ -42,7 +44,6 @@ export class UserInfo {
       evt.preventDefault();
       this._inputList = this._element.querySelectorAll(formInputSelector);
       this.getNewProfileInfo();
-      this.close(this._element);
     });
     this._newInfoForm.elements.editInfoCloseButton.addEventListener(
       "click",
@@ -55,7 +56,7 @@ export class UserInfo {
       evt.target === evt.currentTarget ? this.close(this._element) : null;
     });
     this._userImg.addEventListener("mouseover", () => {
-      this.setNewUserPic();
+      this.editUserPic();
     });
   }
 
@@ -74,8 +75,6 @@ export class UserInfo {
   setNewProfile() {
     const nameElement = document.querySelector(currentUserNameSelector);
     const jobElement = document.querySelector(currentUserJobSelector);
-    nameElement.textContent = this._newProfileInfo.name;
-    jobElement.textContent = this._newProfileInfo.about;
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
@@ -93,13 +92,22 @@ export class UserInfo {
         }
         return Promise.reject(`Error: ${res.status}`);
       })
+      .then((data) => {
+        document.querySelector(editInfoSaveButtonSelector).textContent =
+          "Saving...";
+        setTimeout(() => {
+          nameElement.textContent = data.name;
+          jobElement.textContent = data.about;
+          this.close(this._element);
+        }, 4000);
+      })
       .catch((err) => {
         console.log(`Error: ${err} - ${err.status}`);
         return [];
       });
   }
 
-  setNewUserPic() {
+  editUserPic() {
     this._renderingEditIcon();
     this._editIcon.addEventListener("mouseleave", () => {
       this._editIcon.remove();
@@ -125,6 +133,7 @@ export class UserInfo {
       this._handleEscClose(this._editPicElement);
       this._editPicForm.addEventListener("submit", (evt) => {
         evt.preventDefault();
+        this.setNewUserPic();
       });
       this._editPicFormCloseButton.addEventListener("click", (evt) => {
         this.close(this._editPicElement);
@@ -139,6 +148,38 @@ export class UserInfo {
 
   formOpened() {
     this._handleEscClose(this._element);
+  }
+
+  setNewUserPic() {
+    this._newUserPicUrl = this._editPicForm.elements.newImgUrl.value;
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._headersAuthorization,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: this._newUserPicUrl,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        document.querySelector(editPicSaveButtonSelector).textContent =
+          "Saving...";
+        setTimeout(() => {
+          this._userImg.setAttribute("src", data.avatar);
+          this.close(this._editPicElement);
+        }, 4000);
+      })
+      .catch((err) => {
+        console.log(`Error: ${err} - ${err.status}`);
+        return [];
+      });
   }
 
   _renderingEditIcon() {

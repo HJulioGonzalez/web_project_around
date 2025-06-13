@@ -1,6 +1,7 @@
 import {
   formInputSelector,
   popUpNewImgSelector,
+  newPicSaveButtonSelector,
   contentSelector,
   newImgNameSelector,
   cardListSelector,
@@ -40,7 +41,6 @@ export class PopUpWithForms extends PopUp {
       evt.preventDefault();
       this.getNewData();
       this.creatingNewPost();
-      this.close();
     });
     this._newImgForm.elements.newImgCloseButton.addEventListener(
       "click",
@@ -67,7 +67,6 @@ export class PopUpWithForms extends PopUp {
     document.addEventListener(
       "keydown",
       (evt) => {
-        console.log("popupwithform esc closing method has been called");
         evt.key === "Escape" ? element.remove() : "";
       },
       { once: true }
@@ -90,20 +89,6 @@ export class PopUpWithForms extends PopUp {
   }
 
   creatingNewPost() {
-    const popUpWithDefaultImage = new PopupWithImage({
-      popup: popUpImgTemplate,
-    });
-    const newCardObj = new Card(this._newTownInfo);
-    const newCardElement = newCardObj.generateCard();
-    const newCardSection = new Section({ data: [] }, cardListSelector);
-    newCardSection.addItemDefault(newCardElement);
-    newCardElement
-      .querySelector(cardPicSelector)
-      .addEventListener("click", (evt) => {
-        evt.preventDefault();
-        popUpWithDefaultImage.open().close();
-        popUpWithDefaultImage.setImageData(evt);
-      });
     fetch(`${this._baseUrl}/cards`, {
       method: "POST",
 
@@ -121,6 +106,16 @@ export class PopUpWithForms extends PopUp {
           return res.json();
         }
         return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        document.querySelector(newPicSaveButtonSelector).textContent =
+          "Saving...";
+        setTimeout(() => {
+          this.close();
+          const newCardObj = new Card(data);
+          const newCardElement = newCardObj.generateCard();
+          FormRenderer.addItemDefault(newCardElement);
+        }, 4000);
       })
       .catch((err) => {
         console.log(`Error: ${err} - ${err.status}`);

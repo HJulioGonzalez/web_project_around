@@ -12,12 +12,13 @@ import {
   likeStatusInactiveSelector,
 } from "../utils/constants.js";
 import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
-import { Api } from "../Components/Api.js";
+import { Api, initialInfo } from "../Components/Api.js";
 export class Card {
   constructor(data) {
     this._townTitle = data.name;
     this._townUrl = data.link;
     this._isLiked = data.isLiked;
+    this._id = data._id;
   }
 
   updateApi() {
@@ -68,10 +69,11 @@ export class Card {
     this._likeButton.addEventListener("click", (evt) => {
       evt.preventDefault();
       this.likeRealTime(evt);
-      fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
-        method: "GET",
+      const method = this._isLiked ? "PUT" : "DELETE";
+      fetch(`${initialInfo._baseUrl}/cards/${this._id}/likes`, {
+        method: method,
         headers: {
-          authorization: this._updatedCardsInfo._headers.authorization,
+          authorization: initialInfo._headers.authorization,
         },
       })
         .then((res) => {
@@ -80,58 +82,10 @@ export class Card {
           }
           return Promise.reject(`Error: ${res.status}`);
         })
-        .then((updatedData) => {
-          const cardItem = evt.target.closest(allCardsListSelector);
-          const cardItemName =
-            cardItem.querySelector(townNameSelector).textContent;
-          const newCardItemApi = updatedData.find(
-            (item) => item.name === cardItemName
-          );
-          return newCardItemApi;
-        })
-        .then((data) => {
-          const method = !data.isLiked ? "PUT" : "DELETE";
-          fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data._id}/likes`, {
-            method: method,
-            headers: {
-              authorization: this._updatedCardsInfo._headers.authorization,
-            },
-          })
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              }
-              return Promise.reject(`Error: ${res.status}`);
-            })
-            .then((newState) => {
-              // evt.target.setAttribute("src", likeStatusActiveSelector);
-            });
-        })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
+          return [];
         });
-      // this.likeRealTime(likeStatus);
-      // const method = !likeStatus ? "PUT" : "DELETE";
-      // fetch(`${baseUrl}/cards/${cardId}/likes`, {
-      //   method: method,
-      //   cache: "no-store",
-      //   headers: {
-      //     authorization: headersAuthorization,
-      //   },
-      // })
-      //   .then((res) => {
-      //     if (res.ok) {
-      //       return res.json();
-      //     }
-      //     return Promise.reject(`Error: ${res.status}`);
-      //   })
-      //   .then((data) => {
-      //     likeStatus = !likeStatus;
-      //     console.log(data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(`Error: ${err} - ${err.status}`);
-      //   });
     });
   }
 
@@ -219,11 +173,4 @@ export class Card {
       evt.target === evt.currentTarget ? this._confirmElement.remove() : "";
     });
   }
-
-  // _handleEscClose() {
-  //   document.addEventListener("keydown", (evt) => {
-  //     console.log("new card esc closing method has been called");
-  //     evt.key === "Escape" ? this._confirmElement.remove() : "";
-  //   });
-  // }
 }

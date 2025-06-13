@@ -40,12 +40,15 @@ export const popUpSelector = ".prompted-image";
 export const popUpNewImgSelector = ".new-picture";
 export const popUpUserInfoSelector = ".edit-info";
 export const editInfoContainerSelector = ".edit-info__container";
+export const editInfoSaveButtonSelector = ".edit-info__container-button";
 export const editPicContainerSelector = ".edit-pic__container";
+export const editPicSaveButtonSelector = ".edit-pic__container-button";
 export const editPicFormCloseButtonSelector = ".edit-pic__closebuttton";
 export const popUpConfirmationSelector = ".popup-delete";
 export const editPicSelector = ".edit-pic";
 export const authorPicSelector = ".author__picture";
 export const newPicContainerSelector = ".new-picture__container";
+export const newPicSaveButtonSelector = ".new-picture__container-button";
 export const currentUserNameSelector = ".author__info-name";
 export const currentUserJobSelector = ".author__info-job";
 export const cardTemplate = ".venues__template";
@@ -74,7 +77,7 @@ export const enableValidationElements = {
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
 };
-export const FormRenderer = new Section({ data: [] }, contentSelector);
+export const FormRenderer = new Section({ data: [] }, cardListSelector);
 export const userIdHabib = "d0312e08-7264-4abf-aaac-0ec85ede7320";
 export const likeStatusActiveSelector = "./images/like_ACTIVE.png";
 export const likeStatusInactiveSelector = "./images/like_BLACK.svg";

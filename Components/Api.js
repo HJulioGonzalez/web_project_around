@@ -117,5 +117,14 @@ export class Api {
         return [];
       });
   }
+
   // otros métodos para trabajar con la API
 }
+
+export const initialInfo = new Api({
+  baseUrl: "https://around-api.es.tripleten-services.com/v1",
+  headers: {
+    authorization: "d0312e08-7264-4abf-aaac-0ec85ede7320",
+    "Content-Type": "application/json",
+  },
+});
