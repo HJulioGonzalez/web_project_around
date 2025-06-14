@@ -81,3 +81,5 @@ export const FormRenderer = new Section({ data: [] }, cardListSelector);
 export const userIdHabib = "d0312e08-7264-4abf-aaac-0ec85ede7320";
 export const likeStatusActiveSelector = "./images/like_ACTIVE.png";
 export const likeStatusInactiveSelector = "./images/like_BLACK.svg";
+export const saveStateSelector = "Save";
+export const savingStateSelector = "Saving..."

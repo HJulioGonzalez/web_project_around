@@ -108,7 +108,6 @@ export class Card {
       this._confirmSection = new PopupWithConfirmation({
         popup: confirmationFormTemplate,
       });
-      9;
       this._confirmElement = this._confirmSection.generateForm();
       FormRenderer.addItem(this._confirmElement);
       this._setEventListeners(evt.target);
@@ -121,12 +120,50 @@ export class Card {
     this._confirmDelButton = this._confirmForm.elements.popupDeleteCloseButton;
     this._confirmForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._confirmElement.remove();
-      this._element.remove();
-      fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
-        method: "GET",
+      // this._confirmElement.remove();
+      // this._element.remove();
+      // fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
+      //   method: "GET",
+      //   headers: {
+      //     authorization: this._updatedCardsInfo._headers.authorization,
+      //   },
+      // })
+      //   .then((res) => {
+      //     if (res.ok) {
+      //       return res.json();
+      //     }
+      //     return Promise.reject(`Error: ${res.status}`);
+      //   })
+      //   .then((updatedData) => {
+      //     const cardItem = delButton.closest(allCardsListSelector);
+      //     const cardItemName =
+      //       cardItem.querySelector(townNameSelector).textContent;
+      //     const newCardItemApi = updatedData.find(
+      //       (item) => item.name === cardItemName
+      //     );
+      //     return newCardItemApi._id;
+      //   })
+      //   .then((data) => {
+      //     fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data}`, {
+      //       method: "DELETE",
+      //       cache: "no-store",
+      //       headers: {
+      //         authorization: this._updatedCardsInfo._headers.authorization,
+      //       },
+      //     }).then((res) => {
+      //       if (res.ok) {
+      //         return res.json();
+      //       }
+      //       return Promise.reject(`Error: ${res.status}`);
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     console.log(`Error: ${err} - ${err.status}`);
+      //   });
+      fetch(`${initialInfo._baseUrl}/cards/${this._id}`, {
+        method: "DELETE",
         headers: {
-          authorization: this._updatedCardsInfo._headers.authorization,
+          authorization: initialInfo._headers.authorization,
         },
       })
         .then((res) => {
@@ -134,32 +171,12 @@ export class Card {
             return res.json();
           }
           return Promise.reject(`Error: ${res.status}`);
-        })
-        .then((updatedData) => {
-          const cardItem = delButton.closest(allCardsListSelector);
-          const cardItemName =
-            cardItem.querySelector(townNameSelector).textContent;
-          const newCardItemApi = updatedData.find(
-            (item) => item.name === cardItemName
-          );
-          return newCardItemApi._id;
-        })
-        .then((data) => {
-          fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data}`, {
-            method: "DELETE",
-            cache: "no-store",
-            headers: {
-              authorization: this._updatedCardsInfo._headers.authorization,
-            },
-          }).then((res) => {
-            if (res.ok) {
-              return res.json();
-            }
-            return Promise.reject(`Error: ${res.status}`);
-          });
+        }).then(data=>{
+          console.log(data)
         })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
+          return [];
         });
     });
     this._confirmDelButton.addEventListener("click", (evt) => {

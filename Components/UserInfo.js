@@ -12,6 +12,8 @@ import {
   editPicContainerSelector,
   editInfoSaveButtonSelector,
   editPicSaveButtonSelector,
+  savingStateSelector,
+  saveStateSelector
 } from "../utils/constants.js";
 import { Api } from "../Components/Api.js";
 import { EditUserImg } from "./EditUserImg.js";
@@ -42,6 +44,8 @@ export class UserInfo {
   _setEventListener() {
     this._newInfoForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      document.querySelector(editInfoSaveButtonSelector).textContent =
+          savingStateSelector;
       this._inputList = this._element.querySelectorAll(formInputSelector);
       this.getNewProfileInfo();
     });
@@ -93,11 +97,11 @@ export class UserInfo {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((data) => {
-        document.querySelector(editInfoSaveButtonSelector).textContent =
-          "Saving...";
         setTimeout(() => {
           nameElement.textContent = data.name;
           jobElement.textContent = data.about;
+          document.querySelector(editInfoSaveButtonSelector).textContent =
+          saveStateSelector;
           this.close(this._element);
         }, 4000);
       })
@@ -133,6 +137,7 @@ export class UserInfo {
       this._handleEscClose(this._editPicElement);
       this._editPicForm.addEventListener("submit", (evt) => {
         evt.preventDefault();
+        document.querySelector(editPicSaveButtonSelector).textContent = savingStateSelector;
         this.setNewUserPic();
       });
       this._editPicFormCloseButton.addEventListener("click", (evt) => {
@@ -169,8 +174,6 @@ export class UserInfo {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((data) => {
-        document.querySelector(editPicSaveButtonSelector).textContent =
-          "Saving...";
         setTimeout(() => {
           this._userImg.setAttribute("src", data.avatar);
           this.close(this._editPicElement);
@@ -190,6 +193,7 @@ export class UserInfo {
   }
 
   _handleEscClose(element) {
+    console.log("habib")
     document.addEventListener(
       "keydown",
       (evt) => {
