@@ -10,6 +10,8 @@ import {
   delImgConfirmationSelector,
   likeStatusActiveSelector,
   likeStatusInactiveSelector,
+  savingStateSelector,
+  deletingStateSelector,
 } from "../utils/constants.js";
 import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
 import { Api, initialInfo } from "../Components/Api.js";
@@ -122,6 +124,7 @@ export class Card {
       evt.preventDefault();
       // this._confirmElement.remove();
       // this._element.remove();
+      this._confirmButton.textContent = deletingStateSelector;
       fetch(`${initialInfo._baseUrl}/cards/${this._id}`, {
         method: "DELETE",
         headers: {
@@ -134,8 +137,11 @@ export class Card {
           }
           return Promise.reject(`Error: ${res.status}`);
         }).then(data=>{
+          setTimeout(() => {
           console.log(data);
           this._element.remove();
+          this._confirmElement.remove();
+        }, 4000);
         })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
