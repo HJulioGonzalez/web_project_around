@@ -33,6 +33,8 @@ export class PopUpWithForms extends PopUp {
     this._headersAuthorization = headersAuthorization;
     this._element = this._getTemplate();
     this._newImgForm = this._element.firstElementChild;
+    this._saveButon = this._element.querySelector(newPicSaveButtonSelector);
+    this._saveButon.textContent = saveStateSelector;
     this._setEventListener();
     return this._element;
   }
@@ -42,16 +44,17 @@ export class PopUpWithForms extends PopUp {
       evt.preventDefault();
       this.getNewData();
       this.creatingNewPost();
+      this._saveButon.textContent = savingStateSelector;
     });
     this._newImgForm.elements.newImgCloseButton.addEventListener(
       "click",
       (evt) => {
         evt.preventDefault();
-        this.close();
+        this.close(this._element);
       }
     );
     this._element.addEventListener("click", (evt) => {
-      evt.target === evt.currentTarget ? this.close() : "";
+      evt.target === evt.currentTarget ? this.close(this._element) : "";
     });
   }
 
@@ -78,9 +81,10 @@ export class PopUpWithForms extends PopUp {
     this._handleEscClose(this._element);
   }
 
-  close() {
-    this._element.remove();
-    this._element.firstElementChild.reset();
+  close(element) {
+    element.remove();
+    element.firstElementChild.reset();
+    this._saveButon.textContent = saveStateSelector
   }
 
   getNewData() {
@@ -109,13 +113,13 @@ export class PopUpWithForms extends PopUp {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((data) => {
-        document.querySelector(newPicSaveButtonSelector).textContent =
-          "Saving...";
+        
         setTimeout(() => {
-          this.close();
+          this.close(this._element);
           const newCardObj = new Card(data);
           const newCardElement = newCardObj.generateCard();
           FormRenderer.addItemDefault(newCardElement);
+        
         }, 4000);
       })
       .catch((err) => {

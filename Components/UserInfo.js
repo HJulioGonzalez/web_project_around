@@ -193,7 +193,6 @@ export class UserInfo {
   }
 
   _handleEscClose(element) {
-    console.log("habib")
     document.addEventListener(
       "keydown",
       (evt) => {

@@ -109,6 +109,7 @@ export class Api {
         );
         authorInfoEditButton.addEventListener("click", (evt) => {
           evt.preventDefault();
+          currentUser.formOpened();
           FormRenderer.addItem(userNewInfoForm);
         });
       })

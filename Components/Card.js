@@ -122,44 +122,6 @@ export class Card {
       evt.preventDefault();
       // this._confirmElement.remove();
       // this._element.remove();
-      // fetch(`${this._updatedCardsInfo._baseUrl}/cards`, {
-      //   method: "GET",
-      //   headers: {
-      //     authorization: this._updatedCardsInfo._headers.authorization,
-      //   },
-      // })
-      //   .then((res) => {
-      //     if (res.ok) {
-      //       return res.json();
-      //     }
-      //     return Promise.reject(`Error: ${res.status}`);
-      //   })
-      //   .then((updatedData) => {
-      //     const cardItem = delButton.closest(allCardsListSelector);
-      //     const cardItemName =
-      //       cardItem.querySelector(townNameSelector).textContent;
-      //     const newCardItemApi = updatedData.find(
-      //       (item) => item.name === cardItemName
-      //     );
-      //     return newCardItemApi._id;
-      //   })
-      //   .then((data) => {
-      //     fetch(`${this._updatedCardsInfo._baseUrl}/cards/${data}`, {
-      //       method: "DELETE",
-      //       cache: "no-store",
-      //       headers: {
-      //         authorization: this._updatedCardsInfo._headers.authorization,
-      //       },
-      //     }).then((res) => {
-      //       if (res.ok) {
-      //         return res.json();
-      //       }
-      //       return Promise.reject(`Error: ${res.status}`);
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log(`Error: ${err} - ${err.status}`);
-      //   });
       fetch(`${initialInfo._baseUrl}/cards/${this._id}`, {
         method: "DELETE",
         headers: {
@@ -172,7 +134,8 @@ export class Card {
           }
           return Promise.reject(`Error: ${res.status}`);
         }).then(data=>{
-          console.log(data)
+          console.log(data);
+          this._element.remove();
         })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
