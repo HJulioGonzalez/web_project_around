@@ -8,11 +8,12 @@ import {
   popUpImgTemplate,
   cardPicSelector,
   FormRenderer,
-  saveStateSelector, savingStateSelector
+  saveStateSelector,
+  savingStateSelector,
 } from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
 import { PopupWithImage } from "../Components/PopupWithImage.js";
-import { Api } from "../Components/Api.js";
+import { Api, initialInfo } from "../Components/Api.js";
 import { Card } from "../Components/Card.js";
 import { FormValidator } from "./FormValidator.js";
 import Section from "../Components/Section.js";
@@ -28,9 +29,8 @@ export class PopUpWithForms extends PopUp {
     return popUpElement;
   }
 
-  generateForm(baseUrl, headersAuthorization) {
-    this._baseUrl = baseUrl;
-    this._headersAuthorization = headersAuthorization;
+  generateForm() {
+    console.log(initialInfo._baseUrl, initialInfo._headers.authorization);
     this._element = this._getTemplate();
     this._newImgForm = this._element.firstElementChild;
     this._saveButon = this._element.querySelector(newPicSaveButtonSelector);
@@ -84,7 +84,7 @@ export class PopUpWithForms extends PopUp {
   close(element) {
     element.remove();
     element.firstElementChild.reset();
-    this._saveButon.textContent = saveStateSelector
+    this._saveButon.textContent = saveStateSelector;
   }
 
   getNewData() {
@@ -94,11 +94,11 @@ export class PopUpWithForms extends PopUp {
   }
 
   creatingNewPost() {
-    fetch(`${this._baseUrl}/cards`, {
+    fetch(`${initialInfo._baseUrl}/cards`, {
       method: "POST",
 
       headers: {
-        authorization: this._headersAuthorization,
+        authorization: initialInfo._headers.authorization,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -113,13 +113,11 @@ export class PopUpWithForms extends PopUp {
         return Promise.reject(`Error: ${res.status}`);
       })
       .then((data) => {
-        
         setTimeout(() => {
           this.close(this._element);
           const newCardObj = new Card(data);
           const newCardElement = newCardObj.generateCard();
           FormRenderer.addItemDefault(newCardElement);
-        
         }, 4000);
       })
       .catch((err) => {
