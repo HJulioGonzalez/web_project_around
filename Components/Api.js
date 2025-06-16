@@ -1,7 +1,6 @@
 import Section from "../Components/Section.js";
 import {
   cardListSelector,
-  popUpImgTemplate,
   cardPicSelector,
   currentUserNameSelector,
   currentUserJobSelector,
@@ -10,9 +9,9 @@ import {
   FormRenderer,
   authorInfoEditButton,
   authorPicSelector,
+  popUpWithDefaultImage,
 } from "../utils/constants.js";
 import { Card } from "../Components/Card.js";
-import { PopupWithImage } from "../Components/PopupWithImage.js";
 import { PopUpWithForms } from "../Components/PopupWithForms.js";
 import { UserInfo } from "../Components/UserInfo.js";
 export class Api {
@@ -21,105 +20,58 @@ export class Api {
     this._headers = headers;
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        authorization: this._headers.authorization,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((cardsData) => {
-        console.log(cardsData);
-        const popUpWithDefaultImage = new PopupWithImage({
-          popup: popUpImgTemplate,
-        });
-        const cardsSection = new Section(
-          {
-            data: cardsData,
-            renderer: (cardItem) => {
-              const card = new Card(cardItem);
-              const cardElement = card.generateCard();
-              cardsSection.addItem(cardElement);
-              cardElement
-                .querySelector(cardPicSelector)
-                .addEventListener("click", (evt) => {
-                  evt.preventDefault();
-                  popUpWithDefaultImage.open().close();
-                  popUpWithDefaultImage.setImageData(evt);
-                });
-            },
-          },
-          cardListSelector
-        );
-        cardsSection.renderItems();
-        const newImgForm = new PopUpWithForms({ popup: popUpNewImgTemplate });
-        const newImgFormElement = newImgForm.generateForm(
-          this._baseUrl,
-          this._headers.authorization,
-          cardsData
-        );
-        newImgAddButton.forEach((item) => {
-          item.addEventListener("click", (evt) => {
-            evt.preventDefault();
-            newImgForm.formOpened();
-            FormRenderer.addItem(newImgFormElement);
-          });
-        });
-      })
-      .catch((err) => {
-        console.log(`Error: ${err} - ${err.status}`);
-        return [];
-      });
+  renderUserInfo(data) {
+    const nameElement = document.querySelector(currentUserNameSelector);
+    const jobElement = document.querySelector(currentUserJobSelector);
+    const picElement = document.querySelector(authorPicSelector);
+    nameElement.textContent = data.name;
+    jobElement.textContent = data.about;
+    picElement.setAttribute("src", data.avatar);
+    const currentUser = new UserInfo(
+      currentUserNameSelector,
+      currentUserJobSelector
+    );
+    const userNewInfoForm = currentUser.generateForm(
+      this._baseUrl,
+      this._headers.authorization
+    );
+    authorInfoEditButton.addEventListener("click", (evt) => {
+      evt.preventDefault();
+      currentUser.formOpened();
+      FormRenderer.addItem(userNewInfoForm);
+    });
   }
 
-  getInitialProfileInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        authorization: `${this._headers.authorization}`,
+  renderCardsInfo(data) {
+    const cardsSection = new Section(
+      {
+        data: data,
+        renderer: (cardItem) => {
+          const card = new Card(cardItem);
+          const cardElement = card.generateCard();
+          cardsSection.addItem(cardElement);
+          cardElement
+            .querySelector(cardPicSelector)
+            .addEventListener("click", (evt) => {
+              evt.preventDefault();
+              popUpWithDefaultImage.open().close();
+              popUpWithDefaultImage.setImageData(evt);
+            });
+        },
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      })
-      .then((userInfo) => {
-        const nameElement = document.querySelector(currentUserNameSelector);
-        const jobElement = document.querySelector(currentUserJobSelector);
-        const picElement = document.querySelector(authorPicSelector);
-        nameElement.textContent = userInfo.name;
-        jobElement.textContent = userInfo.about;
-        picElement.setAttribute("src", userInfo.avatar);
-        const currentUser = new UserInfo(
-          currentUserNameSelector,
-          currentUserJobSelector
-        );
-        const userNewInfoForm = currentUser.generateForm(
-          this._baseUrl,
-          this._headers.authorization
-        );
-        authorInfoEditButton.addEventListener("click", (evt) => {
-          evt.preventDefault();
-          currentUser.formOpened();
-          FormRenderer.addItem(userNewInfoForm);
-        });
-      })
-      .catch((err) => {
-        console.log(`Error: ${err} - ${err.status}`);
-        return [];
+      cardListSelector
+    );
+    cardsSection.renderItems();
+    const newImgForm = new PopUpWithForms({ popup: popUpNewImgTemplate });
+    const newImgFormElement = newImgForm.generateForm();
+    newImgAddButton.forEach((item) => {
+      item.addEventListener("click", (evt) => {
+        evt.preventDefault();
+        newImgForm.formOpened();
+        FormRenderer.addItem(newImgFormElement);
       });
+    });
   }
-
-  // otros métodos para trabajar con la API
 }
 
 export const initialInfo = new Api({
@@ -129,3 +81,34 @@ export const initialInfo = new Api({
     "Content-Type": "application/json",
   },
 });
+
+const linkList = [
+  `${initialInfo._baseUrl}/users/me`,
+  `${initialInfo._baseUrl}/cards`,
+];
+
+const fetchPromises = linkList.map((url) => {
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      authorization: initialInfo._headers.authorization,
+    },
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  });
+});
+
+Promise.all(fetchPromises)
+  .then((data) => {
+    const userInfo = data[0];
+    const cardsInfo = data[1];
+    initialInfo.renderUserInfo(userInfo);
+    initialInfo.renderCardsInfo(cardsInfo);
+  })
+  .catch((err) => {
+    console.log(`Error: ${err} - ${err.status}`);
+    return [];
+  });

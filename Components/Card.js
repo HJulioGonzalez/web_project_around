@@ -7,10 +7,8 @@ import {
   deleteButtonSelector,
   confirmationFormTemplate,
   FormRenderer,
-  delImgConfirmationSelector,
   likeStatusActiveSelector,
   likeStatusInactiveSelector,
-  savingStateSelector,
   deletingStateSelector,
 } from "../utils/constants.js";
 import { PopupWithConfirmation } from "../Components/PopupWithConfirmation.js";
@@ -45,13 +43,6 @@ export class Card {
   }
 
   generateCard() {
-    this._updatedCardsInfo = new Api({
-      baseUrl: "https://around-api.es.tripleten-services.com/v1",
-      headers: {
-        authorization: "d0312e08-7264-4abf-aaac-0ec85ede7320",
-        "Content-Type": "application/json",
-      },
-    });
     this._element = this._getTemplate();
     this._likeButton = this._element.querySelector(likeButtonSelector);
     this._deleteButton = this._element.querySelector(deleteButtonSelector);
@@ -95,12 +86,9 @@ export class Card {
     if (this._isLiked) {
       this._isLiked = !this._isLiked;
       evt.target.setAttribute("src", likeStatusInactiveSelector);
-      // likeStatus = !likeStatus;
     } else {
       this._isLiked = !this._isLiked;
       evt.target.setAttribute("src", likeStatusActiveSelector);
-      // this._likeButton.setAttribute("src", likeStatusInactiveSelector);
-      // likeStatus = !likeStatus;
     }
   }
 
@@ -116,14 +104,12 @@ export class Card {
     });
   }
 
-  _setEventListeners(delButton) {
+  _setEventListeners() {
     this._confirmForm = this._confirmElement.firstElementChild;
     this._confirmButton = this._confirmForm.elements.confirmationButton;
     this._confirmDelButton = this._confirmForm.elements.popupDeleteCloseButton;
     this._confirmForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      // this._confirmElement.remove();
-      // this._element.remove();
       this._confirmButton.textContent = deletingStateSelector;
       fetch(`${initialInfo._baseUrl}/cards/${this._id}`, {
         method: "DELETE",
@@ -136,12 +122,12 @@ export class Card {
             return res.json();
           }
           return Promise.reject(`Error: ${res.status}`);
-        }).then(data=>{
+        })
+        .then((data) => {
           setTimeout(() => {
-          console.log(data);
-          this._element.remove();
-          this._confirmElement.remove();
-        }, 4000);
+            this._element.remove();
+            this._confirmElement.remove();
+          }, 4000);
         })
         .catch((err) => {
           console.log(`Error: ${err} - ${err.status}`);
@@ -152,9 +138,6 @@ export class Card {
       evt.preventDefault();
       this._confirmElement.remove();
     });
-    // document.addEventListener("keydown", (evt) => {
-    //   evt.key === "Escape" ? this._confirmElement.remove() : "";
-    // });
     this._confirmElement.addEventListener("click", (evt) => {
       evt.target === evt.currentTarget ? this._confirmElement.remove() : "";
     });

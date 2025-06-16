@@ -1,31 +1,5 @@
 import Section from "../Components/Section.js";
-export const initialCards = [
-  {
-    name: "Gold Coast",
-    link: "https://viajes.nationalgeographic.com.es/medio/2015/03/23/mg_2819a_1000x871.jpg",
-  },
-  {
-    name: "South Australia",
-    link: "https://ausweek.mymedia.delivery/wp-content/uploads/2020/08/155664.jpg",
-  },
-  {
-    name: "Melbourne",
-    link: "https://image-tc.galaxy.tf/wijpeg-cvuab0pgtuyszmx6ytsrb8cpx/melbourne-train-station-1_standard.jpg?crop=106%2C0%2C1708%2C1281",
-  },
-  {
-    name: "Opera Sydney",
-    link: "https://cdn.britannica.com/85/95085-050-C749819D/Sydney-Opera-House-Bennelong-Point-Port-Jackson.jpg",
-  },
-  {
-    name: "Ayers Rock",
-    link: "https://live-production.wcms.abc-cdn.net.au/225a1130c1aa2739bf969f0e17948513?impolicy=wcms_crop_resize&cropH=1688&cropW=3000&xPos=0&yPos=0&width=862&height=485",
-  },
-  {
-    name: "Kangaroo Island",
-    link: "https://expatstraveltogether.com/wp-content/uploads/2023/09/stokes-bay-kangaroo-island-credit-south-australian-tourism-commission-1290x540.jpg",
-  },
-];
-
+import { PopupWithImage } from "../Components/PopupWithImage.js";
 export const cardListSelector = ".venues";
 export const allCardsListSelector = ".venue";
 export const authorSectionSelector = ".author";
@@ -78,9 +52,12 @@ export const enableValidationElements = {
   errorClass: "form__input-error_active",
 };
 export const FormRenderer = new Section({ data: [] }, cardListSelector);
+export const popUpWithDefaultImage = new PopupWithImage({
+  popup: popUpImgTemplate,
+});
 export const userIdHabib = "d0312e08-7264-4abf-aaac-0ec85ede7320";
 export const likeStatusActiveSelector = "./images/like_ACTIVE.png";
 export const likeStatusInactiveSelector = "./images/like_BLACK.svg";
 export const saveStateSelector = "Save";
-export const savingStateSelector = "Saving..."
-export const deletingStateSelector = "Deleting..."
+export const savingStateSelector = "Saving...";
+export const deletingStateSelector = "Deleting...";

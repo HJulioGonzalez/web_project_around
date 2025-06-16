@@ -1,7 +1,4 @@
-import {
-  popUpConfirmationSelector,
-  editPicSelector,
-} from "../utils/constants.js";
+import { editPicSelector } from "../utils/constants.js";
 export class EditUserImg {
   constructor({ popup }) {
     this._popup = document.querySelector(popup);

@@ -2,21 +2,15 @@ import {
   formInputSelector,
   popUpNewImgSelector,
   newPicSaveButtonSelector,
-  contentSelector,
-  newImgNameSelector,
-  cardListSelector,
-  popUpImgTemplate,
   cardPicSelector,
   FormRenderer,
   saveStateSelector,
   savingStateSelector,
+  popUpWithDefaultImage,
 } from "../utils/constants.js";
 import { PopUp } from "../Components/Popup.js";
-import { PopupWithImage } from "../Components/PopupWithImage.js";
-import { Api, initialInfo } from "../Components/Api.js";
+import { initialInfo } from "../Components/Api.js";
 import { Card } from "../Components/Card.js";
-import { FormValidator } from "./FormValidator.js";
-import Section from "../Components/Section.js";
 export class PopUpWithForms extends PopUp {
   constructor({ popup }) {
     super({ popup });
@@ -30,7 +24,6 @@ export class PopUpWithForms extends PopUp {
   }
 
   generateForm() {
-    console.log(initialInfo._baseUrl, initialInfo._headers.authorization);
     this._element = this._getTemplate();
     this._newImgForm = this._element.firstElementChild;
     this._saveButon = this._element.querySelector(newPicSaveButtonSelector);
@@ -118,6 +111,12 @@ export class PopUpWithForms extends PopUp {
           const newCardObj = new Card(data);
           const newCardElement = newCardObj.generateCard();
           FormRenderer.addItemDefault(newCardElement);
+          this._newCardImg = newCardElement.querySelector(cardPicSelector);
+          this._newCardImg.addEventListener("click", (evt) => {
+            evt.preventDefault();
+            popUpWithDefaultImage.open().close();
+            popUpWithDefaultImage.setImageData(evt);
+          });
         }, 4000);
       })
       .catch((err) => {

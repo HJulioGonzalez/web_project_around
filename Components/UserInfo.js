@@ -13,9 +13,8 @@ import {
   editInfoSaveButtonSelector,
   editPicSaveButtonSelector,
   savingStateSelector,
-  saveStateSelector
+  saveStateSelector,
 } from "../utils/constants.js";
-import { Api } from "../Components/Api.js";
 import { EditUserImg } from "./EditUserImg.js";
 export class UserInfo {
   constructor(userName, userJob) {
@@ -45,7 +44,7 @@ export class UserInfo {
     this._newInfoForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
       document.querySelector(editInfoSaveButtonSelector).textContent =
-          savingStateSelector;
+        savingStateSelector;
       this._inputList = this._element.querySelectorAll(formInputSelector);
       this.getNewProfileInfo();
     });
@@ -101,7 +100,7 @@ export class UserInfo {
           nameElement.textContent = data.name;
           jobElement.textContent = data.about;
           document.querySelector(editInfoSaveButtonSelector).textContent =
-          saveStateSelector;
+            saveStateSelector;
           this.close(this._element);
         }, 4000);
       })
@@ -137,7 +136,8 @@ export class UserInfo {
       this._handleEscClose(this._editPicElement);
       this._editPicForm.addEventListener("submit", (evt) => {
         evt.preventDefault();
-        document.querySelector(editPicSaveButtonSelector).textContent = savingStateSelector;
+        document.querySelector(editPicSaveButtonSelector).textContent =
+          savingStateSelector;
         this.setNewUserPic();
       });
       this._editPicFormCloseButton.addEventListener("click", (evt) => {
