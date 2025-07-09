@@ -1,12 +1,10 @@
 .edit-info {
   background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0; /* Add this */
-  bottom: 0; /* Add this */
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
   display: flex;
   justify-content: center;

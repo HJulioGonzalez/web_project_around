@@ -61,3 +61,4 @@ export const likeStatusInactiveSelector = "../images/like_BLACK.svg";
 export const saveStateSelector = "Save";
 export const savingStateSelector = "Saving...";
 export const deletingStateSelector = "Deleting...";
+export const linkedInButtonSelector = ".footer__icon-linkedin";
